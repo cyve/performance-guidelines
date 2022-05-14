@@ -22,3 +22,13 @@
 - Preload services => https://symfony.com/blog/new-in-symfony-5-1-configurable-php-preloading
 - https://jolicode.com/blog/battle-log-a-deep-dive-in-symfony-stack-in-search-of-optimizations-1-n
 - https://jolicode.com/blog/battle-log-a-deep-dive-in-symfony-stack-in-search-of-optimizations-2-n
+
+In dev envirnonment :
+- `doctrine.dbal.profiling_collect_schema_errors: false`
+
+In test environment :
+- Set cache directory to /dev/shm/symfony/cache
+- Use plaintext password hasher
+- `doctrine.dbal.logging: false`
+- Set APP_DEBUG to false
+- XDEBUG_MODE=off php bin/phpunit
