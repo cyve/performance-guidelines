@@ -1,4 +1,4 @@
-# Performance guidelines reference
+# Performance guidelines
 
 - [Apache](apache.md)
 - [PHP](php.md)
