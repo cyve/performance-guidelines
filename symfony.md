@@ -1,6 +1,7 @@
 # Performance guidelines for Symfony
 
 - Performance checklist => https://symfony.com/doc/current/performance.html
+- Caching checklist => https://symfony.com/doc/current/the-fast-track/en/21-cache.html
 - HTTP/2 preload / server push => https://symfony.com/doc/4.4/web_link.html
 - Doctrine cache => https://medium.com/@renaudjacquot/retour-dexp%C3%A9rience-sur-l-optimisation-des-performances-sur-symfony-865ae5e30342#f18f
 - Log optimization => https://symfony.com/doc/4.4/logging.html
