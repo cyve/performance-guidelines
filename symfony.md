@@ -13,7 +13,7 @@
 - Use Doctrine eager/lazy loading
 - Use Doctrine hydratation modes when possible
 - Use Doctrine partial object/partial reference when possible
-- Use app cache
+- Use app cache => https://symfony.com/doc/current/cache.html
 - Use ESI
 - Avoid injecting services into Listeners/Subscribers. Inject full Container or lazy services instead
 - Avoid calling database, filesystem or webservices in kernel listeners/subscribers
@@ -21,6 +21,7 @@
 - Clear config files loading in Kernel
 - Use lazy Twig extensions => https://symfony.com/doc/current/templating/twig_extension.html
 - Preload services => https://symfony.com/blog/new-in-symfony-5-1-configurable-php-preloading
+- Use ServiceSubscriber => https://symfony.com/doc/current/service_container/service_subscribers_locators.html
 - https://jolicode.com/blog/battle-log-a-deep-dive-in-symfony-stack-in-search-of-optimizations-1-n
 - https://jolicode.com/blog/battle-log-a-deep-dive-in-symfony-stack-in-search-of-optimizations-2-n
 
