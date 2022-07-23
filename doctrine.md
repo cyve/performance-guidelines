@@ -6,10 +6,10 @@
 - [Use batch processing](#use-batch-processing)
 - [Iterate on large results](#iterate-on-large-results)
 - [Disable logging and profiling](#disable-logging-and-profiling)
-- [Configure Doctrine cache](#configure-doctrine-cache)
+- [Configure cache](#configure-cache)
 - [Use readonly entities](#use-readonly-entities)
-- [Best practices](#best-practices-for-performance-optimizations)
-- [Misc](#misc)
+- [Other best practices](#other-best-practices)
+- [Links](#links)
 
 ### Use the right fetch mode
 ```php
@@ -132,7 +132,7 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html#read-only-entities
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#entity
 
-### Best practices for performance optimizations
+### Other best practices
 - Avoid complex joins
 - Avoid inheritance mapping
 - Avoid bidirectional relations
@@ -144,7 +144,7 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - Define transactions explicitally
 - Initialize collections in the constructor
 
-### Misc
+### Links
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/best-practices.html
