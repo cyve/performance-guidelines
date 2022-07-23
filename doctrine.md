@@ -41,9 +41,8 @@ $query = $em->getPartialReference(User::class, $id);
 ```php
 $batchSize = 10;
 for ($i = 1; $i <= 1000; ++$i) {
-    $user = new User;
-    $user->setUsername('user'.$i);
-    $em->persist($user);
+    // do stuff
+    $i++;
     if (($i % $batchSize) === 0) {
         $em->flush();
         $em->clear(); // detach flushed objects
@@ -58,9 +57,9 @@ $em->clear();
 **Iterate on large results**
 ```php
 $query = $this->em->createQuery('SELECT u FROM App\Entity\User u');
-foreach ($query->toIterable() as $row) {
+foreach ($query->toIterable([], Query::HYDRATE_OBJECT) as $object) {
     // do stuff
-    $this->em->detach($row[0]); // detach entity
+    $this->em->detach($object); // detach entity
 }
 ```
 
