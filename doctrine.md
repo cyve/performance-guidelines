@@ -122,6 +122,8 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#entity
 
 ### Best practices for performance optimizations
+- Avoid complex joins
+- Avoid inheritance mapping
 - Avoid bidirectional relations
 - Avoid using lifecycle events
 - Avoid using `cascade`
