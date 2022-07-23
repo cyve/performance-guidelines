@@ -99,8 +99,40 @@ when@prod:
                     adapter: cache.system
 ```
 
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/caching.html
 - https://symfony.com/doc/current/reference/configuration/doctrine.html#caching-drivers
 - https://symfony.com/doc/current/cache.html
 
+**Use readonly entities**
+```php
+/* @Entity(readOnly=true) */
+class User {}
+```
+The object can only be persisted, read, detached and removed. Updates will be skipped during flush.
+```php
+// explicitally mark object as read only
+$user = $em->find(User::class, $id);
+$em->getUnitOfWork()->markReadOnly($user);
+
+$users = $em->createQuery('SELECT u FROM App\Entity\User u')
+  ->setHint(Query::HINT_READ_ONLY, true)
+  ->getResult();
+```
+
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html#read-only-entities
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#entity
+
+**Best practices for performance optimizations**
+- Avoid bidirectional relations
+- Avoid using lifecycle events
+- Avoid using `cascade`
+- Avoid using quotes or special characters in table/column names
+- Avoid composite identifiers
+- Do not map foreign keys to fields in an entity
+- Define transactions explicitally
+- Initialize collections in the constructor
+
 **Misc**
-- https://www.doctrine-project.org/projects/doctrine1/en/latest/manual/improving-performance.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/best-practices.html
