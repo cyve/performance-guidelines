@@ -1,6 +1,6 @@
 # Doctrine performance guidelines
 
-**Use the right fetch mode**
+### Use the right fetch mode
 ```php
 /* @ORM\OneToMany(targetEntity="Item", fetch="EAGER") */
 private Collection $items;
@@ -12,7 +12,7 @@ private Collection $items;
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#onetomany
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/tutorials/extra-lazy-associations.html
 
-**Use the right hydratation mode**
+### Use the right hydratation mode
 ```php
 $query = $em->createQuery('SELECT u FROM App\Entity\User u');
 $users = $query->getResult(Query::HYDRATE_ARRAY);
@@ -26,7 +26,7 @@ $users = $query->getResult(Query::HYDRATE_ARRAY);
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/dql-doctrine-query-language.html#hydration-modes
 
-**Use partial objects when necessary**
+### Use partial objects when necessary
 ```php
 // return object with only `id` and `name` properties hydrated. The other properties are null.
 $query = $em->createQuery("SELECT PARTIAL u.{id,name} FROM App\Entity\User u");
@@ -37,7 +37,7 @@ $query = $em->getPartialReference(User::class, $id);
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/partial-objects.html
 
-**Use batch processing**
+### Use batch processing
 ```php
 $batchSize = 10;
 for ($i = 1; $i <= 1000; ++$i) {
@@ -54,7 +54,7 @@ $em->clear();
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/batch-processing.html
 
-**Iterate on large results**
+### Iterate on large results
 ```php
 $query = $this->em->createQuery('SELECT u FROM App\Entity\User u');
 foreach ($query->toIterable([], Query::HYDRATE_OBJECT) as $object) {
@@ -65,7 +65,7 @@ foreach ($query->toIterable([], Query::HYDRATE_OBJECT) as $object) {
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/batch-processing.html#iterating-large-results-for-data-processing
 
-**Disable logging and profiling**
+### Disable logging and profiling
 ```yaml
 doctrine:
   dbal:
@@ -73,7 +73,7 @@ doctrine:
     profiling: "%kernel.debug%"
 ```
 
-**Configure Doctrine cache**
+### Configure Doctrine cache
 ```yaml
 when@prod:
     doctrine:
@@ -102,7 +102,7 @@ when@prod:
 - https://symfony.com/doc/current/reference/configuration/doctrine.html#caching-drivers
 - https://symfony.com/doc/current/cache.html
 
-**Use readonly entities**
+### Use readonly entities
 ```php
 /* @Entity(readOnly=true) */
 class User {}
@@ -121,7 +121,7 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html#read-only-entities
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#entity
 
-**Best practices for performance optimizations**
+### Best practices for performance optimizations
 - Avoid bidirectional relations
 - Avoid using lifecycle events
 - Avoid using `cascade`
@@ -131,7 +131,7 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - Define transactions explicitally
 - Initialize collections in the constructor
 
-**Misc**
+### Misc
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/best-practices.html
