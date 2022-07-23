@@ -1,5 +1,16 @@
 # Doctrine performance guidelines
 
+- [Use the right fetch mode](#use-the-right-fetch-mode)
+- [Use the right hydratation mode](#use-the-right-hydratation-mode)
+- [Use partial objects](#use-partial-objects)
+- [Use batch processing](#use-batch-processing)
+- [Iterate on large results](#iterate-on-large-results)
+- [Disable logging and profiling](#disable-logging-and-profiling)
+- [Configure Doctrine cache](#configure-doctrine-cache)
+- [Use readonly entities](#use-readonly-entities)
+- [Best practices](#best-practices-for-performance-optimizations)
+- [Misc](#misc)
+
 ### Use the right fetch mode
 ```php
 /* @ORM\OneToMany(targetEntity="Item", fetch="EAGER") */
@@ -26,7 +37,7 @@ $users = $query->getResult(Query::HYDRATE_ARRAY);
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/dql-doctrine-query-language.html#hydration-modes
 
-### Use partial objects when necessary
+### Use partial objects
 ```php
 // return object with only `id` and `name` properties hydrated. The other properties are null.
 $query = $em->createQuery("SELECT PARTIAL u.{id,name} FROM App\Entity\User u");
