@@ -57,6 +57,18 @@ error_log=syslog
 # in prod only
 display_errors=0
 display_startup_errors=0
-error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT
+error_reporting=E_ALL & ~E_WARNING & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
 ```
 See https://www.php.net/manual/en/errorfunc.configuration.php#ini.log-errors
+
+### Use applicative cache
+Use APC, Redis or Memcache to store CPU/memory intensive operations.  
+See https://www.php.net/manual/en/book.apcu.php
+
+### Optimize code
+- Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
+- Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
+- Execute batch `INSERT` queries if possible.
+- Establish database connection only if necessary
+- to continue...
+- 
