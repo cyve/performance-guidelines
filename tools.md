@@ -9,9 +9,11 @@ Web tools :
 - https://www.webpagetest.org
 - https://pagespeed.web.dev
 - https://www.dareboost.com
+- https://gtmetrix.com
 
 CI tools :
 - https://www.webpagetest.org/getkey.php
+- https://gtmetrix.com/api/docs/2.0/
 - https://developers.google.com/web/tools/lighthouse
 - https://www.sitespeed.io
 
