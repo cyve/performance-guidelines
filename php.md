@@ -22,7 +22,7 @@ Set php-fpm as handler for `.php` files in Apache configuration
 ```
 See https://httpd.apache.org/docs/2.4/en/mod/mod_proxy_fcgi.html
 
-### OPCache
+### Configure OPCache
 ```
 ; php.ini
 opcache.enable=1;
@@ -49,4 +49,14 @@ Add `composer dump-autoload --no-dev --classmap-authoritative` to your deploymen
 See https://getcomposer.org/doc/articles/autoloader-optimization.md
 
 ### Optimize logging
-- (log errors in syslog)
+```
+; php.ini
+log_errors=1
+error_log=syslog
+
+# in prod only
+display_errors=0
+display_startup_errors=0
+error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT
+```
+See https://www.php.net/manual/en/errorfunc.configuration.php#ini.log-errors
