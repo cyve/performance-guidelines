@@ -11,7 +11,7 @@ See https://httpd.apache.org/docs/2.4/howto/htaccess.html#when
 ### Use cache
 Enalbe module `mod_headers`. Add `ETag` and `Cache-Control` headers on static responses.
 ```
-<FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2)$">
+<FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2|pdf|txt)$">
   # generate etag from file size and last modification time
   FileETag MTime Size
   # one year timeout
@@ -23,7 +23,7 @@ See https://httpd.apache.org/docs/2.4/en/caching.html
 ### Enable compression
 Enable module `mod_deflate`.
 ```
-<FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2)$">
+<FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2|pdf|txt)$">
   SetOutputFilter DEFLATE
 </FilesMatch>
 # or
@@ -42,8 +42,16 @@ See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 See https://httpd.apache.org/docs/2.4/en/mod/prefork.html
 
 ### Optimize logs
-Use directives `LogLevel`, `LogFormat` and `CustomLog` to log only useful events and informations.  
+Use directives `LogLevel`, `LogFormat` and `CustomLog` to log only useful events and informations.
+```
+# do not log access to static files
+SetEnvIf Request_URI "\.(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2|pdf|txt)$" dontlog
+CustomLog /var/log/apache/access.log combined env=!dontlog
+```
 See https://httpd.apache.org/docs/2.4/en/logs.html
+
+### Disable DNS lookup
+Add directive `HostnameLookups Off` to Apache configuration
 
 ### Other links
 - https://httpd.apache.org/docs/2.4/en/misc/perf-tuning.html
