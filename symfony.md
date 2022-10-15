@@ -13,11 +13,11 @@
 ```
 
 ### Service container
-- Use [lazy services](https://symfony.com/doc/5.4/service_container/lazy_services.html) or [service subscribers](https://symfony.com/doc/5.4/service_container/service_subscribers_locators.html) to inject dependencies in event listeners/subscribers, normalizers, voters or Twig extensions, to avoid to instantiate unused services.
+- Use [lazy services](https://symfony.com/doc/5.4/service_container/lazy_services.html) or [service subscribers](https://symfony.com/doc/5.4/service_container/service_subscribers_locators.html) to avoid to instantiate unused services (specially in event listeners/subscribers, normalizers, voters or Twig extensions).
 - Avoid to execute code in class constructor to speed up the kernel boot.
 - Avoid to use database, filesystem or webservices in event listeners/subscribers.
 - [Preload services](https://symfony.com/doc/5.4/reference/dic_tags.html#container-preload) in OPCache.
-- Exclude non-service classes from the service container to avoid the container to be rebuilt if theses files change.
+- Exclude non-service classes from the configuration to avoid the container to be rebuilt in development environment if theses files change.
 ```yaml
 # config/services.yaml
 services:
