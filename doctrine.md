@@ -84,7 +84,7 @@ doctrine:
     profiling: "%kernel.debug%"
 ```
 
-### Configure Doctrine cache
+### Configure cache
 ```yaml
 when@prod:
     doctrine:
