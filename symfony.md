@@ -15,19 +15,13 @@
 - [Other links](#other-links)
 
 ### Configuration
-- Restrict the number of locales enabled to only generate the translation files actually used.
-```yaml
-# config/packages/translation.yaml
-framework:
-    enabled_locales: ['en', 'fr']
-```
-- [Dump the service container](https://symfony.com/doc/5.4/components/dependency_injection/compilation.html#dumping-the-configuration-for-performance) in one file in production environment
+- [Dump the service container](https://symfony.com/doc/5.4/components/dependency_injection/compilation.html#dumping-the-configuration-for-performance) in one file in prod environment
 ```yaml
 # config/services.yaml
 parameters:
     container.dumper.inline_factories: true
 ```
-- Reduce the automatic discovery of configuration files in `Kernel.php` (avoid `/**`) to speed up the kernel boot in development environment. Configure [different environments in a single file](https://symfony.com/doc/5.4/configuration.html#configuration-environments) instead.
+- Reduce the automatic discovery of configuration files in `Kernel.php` (avoid `/**`) to speed up the kernel boot in dev environment. Configure [different environments in a single file](https://symfony.com/doc/5.4/configuration.html#configuration-environments) instead.
 ```diff
 - $container->import('../config/{packages}/*.{php,xml,yaml,yml}');
 + $container->import('../config/my_package/*.yaml');
@@ -35,13 +29,19 @@ parameters:
 - $container->import('../config/services_'.$this->environment.'.{php,xml,yaml,yml}');
 + $container->import('../config/services.yaml');
 ```
+- Restrict the number of locales enabled to only generate the translation files actually used.
+```yaml
+# config/packages/translation.yaml
+framework:
+    enabled_locales: ['en', 'fr']
+```
 
 ### Service container
 - Use [lazy services](https://symfony.com/doc/5.4/service_container/lazy_services.html) or [service subscribers](https://symfony.com/doc/5.4/service_container/service_subscribers_locators.html) to avoid to instantiate unused services (specially in event listeners/subscribers, normalizers, voters or Twig extensions).
 - Avoid to execute code in class constructor to speed up the kernel boot.
 - Avoid to call database, filesystem or webservices in event listeners/subscribers.
 - [Preload services](https://symfony.com/doc/5.4/reference/dic_tags.html#container-preload) to speed up the precompilation ([OPcache](https://www.php.net/manual/en/opcache.installation.php) needs to be enabled).
-- Exclude non-service classes from the configuration to avoid the container to be rebuilt in development environment if these files change.
+- Exclude non-service classes from the configuration to avoid the container to be rebuilt in dev environment if these files change.
 ```yaml
 # config/services.yaml
 services:
