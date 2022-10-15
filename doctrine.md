@@ -78,6 +78,7 @@ foreach ($query->toIterable([], Query::HYDRATE_OBJECT) as $object) {
 
 ### Disable logging and profiling
 ```yaml
+# config/packages/doctrine.yaml
 doctrine:
   dbal:
     logging: "%kernel.debug%" // logging will be disabled if you set `APP_DEBUG=false` in `dev` or `test` env.
@@ -86,6 +87,7 @@ doctrine:
 
 ### Configure cache
 ```yaml
+# config/packages/doctrine.yaml
 when@prod:
     doctrine:
         orm:
