@@ -1,5 +1,19 @@
 # Performance guidelines for Symfony
 
+- [Configuration](#configuration)
+- [Service container](#service-container)
+- [Routing](#routing)
+- [Serialization](#serialization)
+- [Security](#security)
+- [Commands](#commands)
+- [Doctrine](#doctrine)
+- [Twig](#twig)
+- [Kernel](#kernel)
+- [Cache](#cache)
+- [Misc](#misc)
+- [In test environment](#in-test-environment)
+- [Other links](#other-links)
+
 ### Configuration
 - Restrict the number of locales enabled to only generate the translation files actually used.
 ```yaml
@@ -65,13 +79,15 @@ See [Doctrine performance guidelines](doctrine.md)
 - Avoid to execute listeners/subscribers on sub-request events.
 - Use `kernel.terminate` event to execute asynchronous work.
 
-### Misc
+### Cache
 - Use [applicative cache](https://symfony.com/doc/5.4/cache.html) to cache CPU/memory intensive operations.
-- Optimize [logging](https://symfony.com/doc/5.4/logging.html).
 - Make your [HTTP responses cacheable](https://symfony.com/doc/5.4/http_cache.html#making-your-responses-http-cacheable).
 - Use [Varnish](https://symfony.com/doc/5.4/http_cache/varnish.html) or [Symfony's reverse proxy](https://symfony.com/doc/5.4/http_cache.html#symfony-reverse-proxy).
-- Use Symfony Messenger to [execute code](https://symfony.com/doc/5.4/messenger.html), [run processes](https://symfony.com/doc/5.4/components/process.html#running-processes-asynchronously) or [send emails](https://symfony.com/doc/5.4/mailer.html#sending-messages-async) asynchronously.
 - Use [CachingHttpClient](https://symfony.com/doc/5.4/http_client.html#caching-requests-and-responses) to cache HTTP responses.
+
+### Misc
+- Optimize [logging](https://symfony.com/doc/5.4/logging.html).
+- Use Symfony Messenger to [execute code](https://symfony.com/doc/5.4/messenger.html), [run processes](https://symfony.com/doc/5.4/components/process.html#running-processes-asynchronously) or [send emails](https://symfony.com/doc/5.4/mailer.html#sending-messages-async) asynchronously.
 
 ### In test environment
 - Set environment variable `APP_CACHE_DIR=/dev/shm/symfony/cache` to store the cache in shared memory and speed up I/O.
@@ -79,6 +95,7 @@ See [Doctrine performance guidelines](doctrine.md)
 - Use plaintext password hasher to speed up login and fixtures generation.
 - Use in memory filesystem to speed up I/O.
 - Use SQL transactions to reset database to avoid recreate a new database for each test.
+- Use `fingers_crossed` [Monolog handler](https://symfony.com/doc/5.4/logging.html#handlers-that-modify-log-entries) to reduce the amount of log.
 
 ### Other links
 - https://symfony.com/doc/5.4/performance.html
