@@ -27,7 +27,7 @@ parameters:
 - Avoid to execute code in class constructor to speed up the kernel boot.
 - Avoid to call database, filesystem or webservices in event listeners/subscribers.
 - [Preload services](https://symfony.com/doc/5.4/reference/dic_tags.html#container-preload) to speed up the precompilation ([OPcache](https://www.php.net/manual/en/opcache.installation.php) needs to be enabled).
-- Exclude non-service classes from the configuration to avoid the container to be rebuilt in development environment if theses files change.
+- Exclude non-service classes from the configuration to avoid the container to be rebuilt in development environment if these files change.
 ```yaml
 # config/services.yaml
 services:
