@@ -44,8 +44,17 @@ realpath_cache_ttl=600
 ```
 See https://www.php.net/manual/fr/ini.core.php#ini.realpath-cache-size
 
-### Optimize composer autoload
-Add `composer dump-autoload --no-dev --classmap-authoritative` to your deployment script to creates a class map and prevents Composer from scanning the file system.  
+### Optimize composer
+```
+# composer.json
+"config":{
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "apcu-autoloader": true
+}
+```
+Use `composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader`
+Use `composer dump-autoload --no-dev --optimize --classmap-authoritative --apcu`
 See https://getcomposer.org/doc/articles/autoloader-optimization.md
 
 ### Optimize logging
@@ -65,10 +74,18 @@ See https://www.php.net/manual/en/errorfunc.configuration.php#ini.log-errors
 Use APC, Redis or Memcache to store CPU/memory intensive operations.  
 See https://www.php.net/manual/en/book.apcu.php
 
+### Use PHP tools optimized for performance
+- https://www.slimframework.com
+- https://phalcon.io
+- https://github.com/openswoole/swoole-src
+- https://frankenphp.dev
+
+### Disable Xdebug
+Disable Xdebug in production (of course) but also in development environment or CI when you don't need it (ex: composer install, etc.) If you can't disable the PHP extension, you can run PHP without Xdebug by setting the Xdebug mode (`XDEBUG_MODE=off php app.php`, or `php -d xdebug.mode=off app.php`)
+
 ### Optimize code
 - Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
 - Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
 - Execute batch `INSERT` queries if possible.
 - Establish database connection only if necessary
 - to continue...
-- 
