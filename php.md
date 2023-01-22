@@ -88,4 +88,6 @@ Disable Xdebug in production (of course) but also in development environment or 
 - Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
 - Execute batch `INSERT` queries if possible.
 - Establish database connection only if necessary
+- Use iterators instead of arrays to reduce memory usage
+- Avoid string manipulations (search, concatenation, etc.)
 - to continue...
