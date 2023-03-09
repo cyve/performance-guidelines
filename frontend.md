@@ -5,7 +5,6 @@
 Assets :
 - Minify and concat assets
 - Use CDN
-- Use websafe fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
 - https://developers.google.com/speed/docs/insights/OptimizeImages
 
 HTML :
@@ -13,7 +12,15 @@ HTML :
 - Image lazy loading
 - Content lazy loading
 - Preload, prefetch, preconnect
+- W3C valid
 
 JavaScript/CSS :
 - Mobile first
 - Avoid external libraries (jQuery, Bootstrap, Moment, Lodash)
+- Avoid animations
+- Use web-safe fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
+- Compatibility with old browsers
+
+Features :
+- Remove non-essential features
+- Use static pages
