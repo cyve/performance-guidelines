@@ -130,4 +130,5 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Execute batch `INSERT` queries if possible.
 - Establish database connection only if necessary
 - Avoid string manipulations (search, concatenation, etc.)
+- Use temporary files (with `tmpfile()`) to create large fils line by line
 - to continue...
