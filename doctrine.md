@@ -91,13 +91,13 @@ doctrine:
 when@prod:
     doctrine:
         orm:
-            metadata_cache_driver: // will cache the entities metadata in the "system" cache
+            metadata_cache_driver: # will cache the entities metadata in the "system" cache
                 type: pool
                 pool: doctrine.system_cache_pool
-            query_cache_driver: // will cache the computed DQL queries in the "system" cache
+            query_cache_driver: # will cache the computed DQL queries in the "system" cache
                 type: pool
                 pool: doctrine.system_cache_pool
-            result_cache_driver: // will cache the queries results in the "app" cache
+            result_cache_driver: # will cache the queries results in the "app" cache
                 type: pool
                 pool: doctrine.result_cache_pool
     framework:
@@ -112,6 +112,7 @@ when@prod:
 ```
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/caching.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
 - https://symfony.com/doc/current/reference/configuration/doctrine.html#caching-drivers
 - https://symfony.com/doc/current/cache.html
 
