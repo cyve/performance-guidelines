@@ -125,6 +125,8 @@ foreach (readDatabase(new PDO('') as $row) {
 See https://www.php.net/manual/en/language.oop5.iterations.php
 
 ### Code
+- Use native PHP functions when possible
+- Delegate work to the database
 - Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
 - Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
 - Execute batch `INSERT` queries if possible.
