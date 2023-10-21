@@ -133,4 +133,8 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Establish database connection only if necessary
 - Avoid string manipulations (search, concatenation, etc.)
 - Use temporary files (with `tmpfile()`) to create large fils line by line
+- Avoid cloning object and use references
+- Stream HTTP response
+- Use `SplFixedArray` instead of array
+- Use `SplMinHeap` instead of `sort()` 
 - to continue...
