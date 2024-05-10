@@ -68,6 +68,7 @@ See [Doctrine performance guidelines](doctrine.md)
 
 ### Twig
 - Avoid to use logical instructions (`for`, `if`, `macro`, etc.), array filters (`map()`, `merge()`, etc.) or complex string manipulation (`json_encode()`, `replace()`, etc.) in templates if possible. Doing it in PHP is faster.
+- Avoid injecting dependencies in extensions contructors (they will be instantiated on kernel boot)
 - Use [lazy-loaded extensions](https://symfony.com/doc/5.4/templating/twig_extension.html#creating-lazy-loaded-twig-extensions) to speed up the kernel boot.
 - Do not use `render()`, use [Edge Side Includes (ESI)](https://symfony.com/doc/5.4/http_cache/esi.html) to cache frequently used parts of the page and/or [hinclude](https://symfony.com/doc/5.4/templating/hinclude.html) to load content asynchronously instead.
 - Avoid to call database, filesystem or webservices in ESIs.
