@@ -126,7 +126,7 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 
 ### Code
 - Use native PHP functions when possible
-- Delegate work to the database
+- Delegate work to the database (filtering, sorting, etc.)
 - Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
 - Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
 - Execute batch `INSERT` queries if possible.
@@ -136,5 +136,6 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Avoid cloning object and use references
 - Stream HTTP response
 - Use `SplFixedArray` instead of array
-- Use `SplMinHeap` instead of `sort()` 
+- Use `SplMinHeap` instead of `sort()`
+- Avoid `file_get_contents()`, `file()` and any function reading a entire file in a variable
 - to continue...
