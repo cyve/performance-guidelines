@@ -5,7 +5,7 @@
 Assets :
 - Minify and concat assets
 - Use CDN
-- https://developers.google.com/speed/docs/insights/OptimizeImages
+- Optimize images : https://developers.google.com/speed/docs/insights/OptimizeImages
 
 HTML :
 - Adaptive images
@@ -18,9 +18,18 @@ JavaScript/CSS :
 - Mobile first
 - Avoid external libraries (jQuery, Bootstrap, Moment, Lodash)
 - Avoid animations
+- Avoid render-blocking code
 - Use web-safe fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
 - Compatibility with old browsers
 
 Features :
 - Remove non-essential features
 - Use static pages
+
+Metrics to monitor :
+- LCP
+- FID
+- CLS
+
+Read more:
+- https://www.youtube.com/playlist?list=PLNYkxOF6rcICVl6Vb-AFlw81bQLuv6a_P
