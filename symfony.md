@@ -89,6 +89,7 @@ See [Doctrine performance guidelines](doctrine.md)
 ### Misc
 - Optimize [logging](https://symfony.com/doc/5.4/logging.html).
 - Use Symfony Messenger to [execute code](https://symfony.com/doc/5.4/messenger.html), [run processes](https://symfony.com/doc/5.4/components/process.html#running-processes-asynchronously) or [send emails](https://symfony.com/doc/5.4/mailer.html#sending-messages-async) asynchronously.
+- Limit the number of enabled locales in your application.
 
 ### In test environment
 - Set environment variable `APP_CACHE_DIR=/dev/shm/symfony/cache` to store the cache in shared memory and speed up I/O.
