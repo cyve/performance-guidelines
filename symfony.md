@@ -74,6 +74,7 @@ See [Doctrine performance guidelines](doctrine.md)
 - Avoid to call database, filesystem or webservices in ESIs.
 - [Preload assets](https://symfony.com/doc/5.4/web_link.html) using HTTP/2 and server push to speed up page loading.
 - Use [Symfony UX](https://ux.symfony.com/) JavaScript components to speed up page loading.
+- Cache static page content
 
 ### Kernel
 - Avoid sub-requests if not necessary.
