@@ -1,6 +1,6 @@
 # Performance guidelines for PHP
 
-- [php-fpm](#php-fpm)
+- [PHP-FPM](#php-fpm)
 - [OPCache](#opcache)
 - [Realpath cache](#realpath-cache)
 - [Composer](#composer)
@@ -11,8 +11,8 @@
 - [Generators](#generators)
 - [Code](#code)
 
-### php-fpm
-Set php-fpm as handler for `.php` files in Apache configuration
+### PHP-FPM
+Set PHP-FPM as handler for `.php` files in Apache configuration
 ```
 # /etc/apache2/conf/httpd.conf
 <IfModule proxy_fcgi_module>
@@ -21,17 +21,39 @@ Set php-fpm as handler for `.php` files in Apache configuration
         SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
     </IfModule>
 
-    <FilesMatch "\.(php|phar)$">
-        SetHandler "proxy:unix:/run/php/php8.0-fpm.sock|fcgi://localhost"
-    </FilesMatch>
-    
-    # Deny access to raw php sources by default
-    <FilesMatch "\.(php|phar)$">
-        Require all denied
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/run/php/php8.0-fpm.sock|fcgi://localhost:9000"
     </FilesMatch>
 </IfModule>
 ```
 See https://httpd.apache.org/docs/2.4/en/mod/mod_proxy_fcgi.html
+
+Configure PHP-FPM
+```
+# /etc/php/8.3/fpm/pool.d/www.conf
+
+# The management mode. Set "static" for high traffic apps and "ondemand" for low traffic apps
+pm=static
+
+# The maximum number of child processes allowed to be spawned
+pm.max_children=128
+
+# The number of child processes to start when PHP-FPM starts
+pm.start_servers=4
+
+# The minimum number of idle child processes PHP-FPM will create
+pm.min_spare_servers=2
+
+# The maximum number of idle child processes PHP-FPM will allow
+pm.max_spare_servers=4
+
+#The idle time, in seconds, after which a child process will be killed
+pm.process_idle_timeout=10s
+
+#The number of requests each child process should execute before respawning
+pm.max_requests=200
+```
+See https://www.php.net/manual/en/install.fpm.configuration.php#pm
 
 ### OPCache
 ```
@@ -64,8 +86,8 @@ See https://www.php.net/manual/fr/ini.core.php#ini.realpath-cache-size
     "apcu-autoloader": true
 }
 ```
-Use `composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader`
-Use `composer dump-autoload --no-dev --optimize --classmap-authoritative --apcu`
+Use `composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader`  
+Use `composer dump-autoload --no-dev --optimize --classmap-authoritative --apcu`  
 See https://getcomposer.org/doc/articles/autoloader-optimization.md
 
 ### Logging
