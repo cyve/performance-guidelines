@@ -160,4 +160,5 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Use `SplFixedArray` instead of array
 - Use `SplMinHeap` instead of `sort()`
 - Avoid `file_get_contents()`, `file()` and any function reading a entire file in a variable
+- Use [lazy objects](https://github.com/symfony/var-exporter#lazyghosttrait)
 - to continue...
