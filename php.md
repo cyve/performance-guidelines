@@ -2,11 +2,13 @@
 
 - [PHP-FPM](#php-fpm)
 - [OPCache](#opcache)
+- [JIT compilation](#jit)
 - [Realpath cache](#realpath-cache)
 - [Composer](#composer)
 - [Logging](#logging)
 - [Applicative cache](#applicative-cache)
-- [Tools optimized for performance](#tools-optimized-for-performance)
+- [Framework optimized for performance](#framework-optimized-for-performance)
+- [Parallelisation/asynchronicity](#parallelisation-asynchronicity)
 - [XDebug](#xdebug)
 - [Generators](#generators)
 - [Code](#code)
@@ -58,7 +60,7 @@ See https://www.php.net/manual/en/install.fpm.configuration.php#pm
 ### OPCache
 ```
 ; php.ini
-opcache.enable=1;
+opcache.enable=1
 opcache.memory_consumption=256
 opcache.max_accelerated_files=20000
 
@@ -68,6 +70,17 @@ opcache.preload_user=www-data
 opcache.validate_timestamps=0
 ```
 See https://www.php.net/manual/fr/opcache.configuration.php
+
+### JIT
+```
+; php.ini
+opcache.enable=1
+opcache.jit=tracing
+opcache.jit_buffer_size=100M
+opcache.jit=tracing
+```
+The Just-In-Time compilcation optimizes the CPU load and may have low impact on application with lot of i/o.
+See https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.jit
 
 ### Realpath cache
 ```
@@ -104,14 +117,18 @@ error_reporting=E_ALL & ~E_WARNING & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
 See https://www.php.net/manual/en/errorfunc.configuration.php#ini.log-errors
 
 ### Applicative cache
-Use APC, Redis or Memcache to store CPU/memory intensive operations.  
+Use APC, Redis or Memcached to store CPU/memory intensive operations.  
 See https://www.php.net/manual/en/book.apcu.php
 
-### Tools optimized for performance
+### Framework optimized for performance
 - https://www.slimframework.com
 - https://phalcon.io
-- https://github.com/openswoole/swoole-src
 - https://frankenphp.dev
+
+### Parallelisation/asynchronicity
+- [Fibers](https://www.php.net/manual/en/language.fibers.php)
+- [parallel](https://www.php.net/manual/en/book.parallel.php)
+- [OpenSwoole](https://github.com/openswoole/swoole-src)
 
 ### Xdebug
 Disable Xdebug in production (of course) but also in development environment or CI when you don't need it (ex: composer install, etc.) If you can't disable the PHP extension, you can run PHP without Xdebug by setting the Xdebug mode (`XDEBUG_MODE=off php app.php`, or `php -d xdebug.mode=off app.php`)
@@ -148,6 +165,8 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 
 ### Code
 - Use native PHP functions when possible
+- Use static methods when possible
+- Use `===` instead of `==`
 - Delegate work to the database (filtering, sorting, etc.)
 - Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
 - Do not use `SELECT *`, avoid `JOIN`, and add `LIMIT` in SQL queries.
@@ -161,4 +180,13 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Use `SplMinHeap` instead of `sort()`
 - Avoid `file_get_contents()`, `file()` and any function reading a entire file in a variable
 - Use [lazy objects](https://github.com/symfony/var-exporter#lazyghosttrait)
+- Close or unset unused variables
+- Optimize loop execution
+- Use `foreach` instead of `for`
+- Avoid using global variables
+- Use database connection pooling to avoid excessive connections
+- Use typed variales
+- Use simple quotes instead of double
+- Use enums instead of constants
+- Use readonly properties to avoid useless multiple assignments
 - to continue...
