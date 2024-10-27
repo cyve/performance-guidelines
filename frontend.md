@@ -3,7 +3,7 @@
 - https://www.abondance.com/actualites/20180615-19309-infographies-35-actions-pour-accelerer-son-site.html
 
 Assets :
-- Minify and concat assets
+- Minify, concat and compress assets
 - Use CDN
 - Optimize images : https://developers.google.com/speed/docs/insights/OptimizeImages
 
@@ -13,6 +13,8 @@ HTML :
 - Content lazy loading
 - Preload, prefetch, preconnect
 - W3C valid
+- Use `async` and `defer`
+- Clean up HTML
 
 JavaScript/CSS :
 - Mobile first
@@ -21,6 +23,8 @@ JavaScript/CSS :
 - Avoid render-blocking code
 - Use web-safe fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
 - Compatibility with old browsers
+- Avoid `@import`
+- Batch DOM changes
 
 Features :
 - Remove non-essential features
