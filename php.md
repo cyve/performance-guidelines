@@ -189,4 +189,8 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Use simple quotes instead of double
 - Use enums instead of constants
 - Use readonly properties to avoid useless multiple assignments
+- Use `array_chunk()` to split large array into smaller ones
+- Use `unset()` to remove unused variable
+- Use `gc_collect_cycles()` to remove all unused variables
+- Minimize varialbles serialization
 - to continue...
