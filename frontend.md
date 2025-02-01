@@ -15,13 +15,15 @@ HTML :
 - W3C valid
 - Use `async` and `defer`
 - Clean up HTML
+- Define `width` and `height` attributes on `<img>` to avoid cumulative layout shift problems
 
 JavaScript/CSS :
 - Mobile first
 - Avoid external libraries (jQuery, Bootstrap, Moment, Lodash)
 - Avoid animations
 - Avoid render-blocking code
-- Use web-safe fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
+- Use native fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
+- Use SVG icons instead of icons fonts (ex: FontAwesome)
 - Compatibility with old browsers
 - Avoid `@import`
 - Batch DOM changes
