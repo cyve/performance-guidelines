@@ -15,18 +15,22 @@ HTML :
 - W3C valid
 - Use `async` and `defer`
 - Clean up HTML
-- Define `width` and `height` attributes on `<img>` to avoid cumulative layout shift problems
+- Define `width` and `height` attributes on `<img>` to avoid layout shift problems
 
 JavaScript/CSS :
 - Mobile first
 - Avoid external libraries (jQuery, Bootstrap, Moment, Lodash)
 - Avoid animations
+- For animations, use composite properties (ex: `transform`, `opacity`, `background`, `border`, `z-index`) instead of style properties (ex: `margin`, `padding`, `width`, `top`, `position`, `display`, `visibility`)
 - Avoid render-blocking code
 - Use native fonts (https://www.w3schools.com/cssref/css_websafe_fonts.asp)
+- Use compressed font format (ex: `woff2`)
+- Use `font-display: swap;` to immediatelly load fallback font and `size-adjust` to avoid layout shift 
 - Use SVG icons instead of icons fonts (ex: FontAwesome)
 - Compatibility with old browsers
 - Avoid `@import`
 - Batch DOM changes
+- Use grid layout instead of flexbox to avoid layout shift problems
 
 Features :
 - Remove non-essential features
