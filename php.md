@@ -123,12 +123,15 @@ See https://www.php.net/manual/en/book.apcu.php
 ### Framework optimized for performance
 - https://www.slimframework.com
 - https://phalcon.io
-- https://frankenphp.dev
 
 ### Parallelisation/asynchronicity
 - [Fibers](https://www.php.net/manual/en/language.fibers.php)
 - [parallel](https://www.php.net/manual/en/book.parallel.php)
+- [PCNTL extension](https://www.php.net/manual/en/intro.pcntl.php)
 - [OpenSwoole](https://github.com/openswoole/swoole-src)
+- [spatie/fork](https://github.com/spatie/fork)
+- [ReactPHP](https://reactphp.org)
+- [AMPHP](https://amphp.org)
 
 ### Xdebug
 Disable Xdebug in production (of course) but also in development environment or CI when you don't need it (ex: composer install, etc.) If you can't disable the PHP extension, you can run PHP without Xdebug by setting the Xdebug mode (`XDEBUG_MODE=off php app.php`, or `php -d xdebug.mode=off app.php`)
