@@ -40,22 +40,33 @@ pm=static
 # The maximum number of child processes allowed to be spawned
 pm.max_children=128
 
-# The number of child processes to start when PHP-FPM starts
+# The number of child processes to start when PHP-FPM starts (recommended: CPU cores x4)
 pm.start_servers=4
 
-# The minimum number of idle child processes PHP-FPM will create
+# The minimum number of idle child processes PHP-FPM will create (recommended: CPU cores x2)
 pm.min_spare_servers=2
 
-# The maximum number of idle child processes PHP-FPM will allow
+# The maximum number of idle child processes PHP-FPM will allow (recommended: CPU cores x4)
 pm.max_spare_servers=4
 
-#The idle time, in seconds, after which a child process will be killed
+# The idle time, in seconds, after which a child process will be killed
 pm.process_idle_timeout=10s
 
-#The number of requests each child process should execute before respawning
+# The number of requests each child process should execute before respawning
 pm.max_requests=200
+
+# Log request that take more than 3s to
+slowlog = /var/log/php-fpm.slow.log
+request_slowlog_timeout = 3s
+
+# Restart PHP-FPM if more than 10 requests fail within 1 minute
+emergency_restart_threshold = 10
+emergency_restart_interval = 1m
+
+# Wait 1s before actually killing a process after receiving a KILL signal
+process_control_timeout = 1s
 ```
-See https://www.php.net/manual/en/install.fpm.configuration.php#pm
+See https://www.php.net/manual/en/install.fpm.configuration.php
 
 ### OPCache
 ```
