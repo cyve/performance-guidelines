@@ -161,6 +161,19 @@ foreach (readDatabase(new PDO('') as $row) {
     // do stuff
 }
 ```
+
+Use generators instead of arrays when it's possible
+```php
+function generateNumbers($limit): \Generator {
+    for ($i = 1; $i <= $limit; $i++) {
+        yield $i;
+    }
+}
+
+foreach (generateNumbers(100) as $number) {
+    echo $number."\n";
+}
+```
 See https://www.php.net/manual/en/language.oop5.iterations.php
 
 ### Code
