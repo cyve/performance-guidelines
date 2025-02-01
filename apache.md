@@ -39,7 +39,17 @@ Use `Redirect` or `Alias` directives instead of `RewriteRule` when possible.
 See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 
 ### Use prefork
-See https://httpd.apache.org/docs/2.4/en/mod/prefork.html
+```
+# /etc/apache2/mods-enabled/mpm-worker.conf
+<IfModule mpm_prefork_module>
+  ServerLimit 128 # (Total RAM - Memory used by the system) / process size
+  StartServers 16 # Number of CPU cores
+  MaxRequestWorkers 128 # (Total RAM - Memory used by the system) / process size
+  MaxConnectionsPerChild 200
+</IfModule>
+```
+See https://httpd.apache.org/docs/2.4/en/mod/prefork.html  
+See https://httpd.apache.org/docs/2.4/en/mod/mpm_common.html
 
 ### Optimize logs
 Use directives `LogLevel`, `LogFormat` and `CustomLog` to log only useful events and informations.
@@ -55,3 +65,6 @@ Add directive `HostnameLookups Off` to Apache configuration
 
 ### Other links
 - https://httpd.apache.org/docs/2.4/en/misc/perf-tuning.html
+
+### Resources
+- https://medium.com/@sbuckpesch/apache2-and-php-fpm-performance-optimization-step-by-step-guide-1bfecf161534
