@@ -56,6 +56,7 @@ services:
 ### Serialization
 - Make [custom normalizers cacheable](https://symfony.com/doc/5.4/serializer/custom_normalizer.html#performance).
 - Reduce the serialization groups to the minimum.
+  Reduce the returned data to the minimum
 
 ### Security
 - Make [custom voters cacheable](https://symfony.com/doc/5.4/security/voters.html#the-voter-interface).
@@ -91,6 +92,7 @@ See [Doctrine performance guidelines](doctrine.md)
 - Optimize [logging](https://symfony.com/doc/5.4/logging.html).
 - Use Symfony Messenger to [execute code](https://symfony.com/doc/5.4/messenger.html), [run processes](https://symfony.com/doc/5.4/components/process.html#running-processes-asynchronously) or [send emails](https://symfony.com/doc/5.4/mailer.html#sending-messages-async) asynchronously.
 - Limit the number of enabled locales in your application.
+  Use invokable controllers
 
 ### In test environment
 - Set environment variable `APP_CACHE_DIR=/dev/shm/symfony/cache` to store the cache in shared memory and speed up I/O.
@@ -99,6 +101,10 @@ See [Doctrine performance guidelines](doctrine.md)
 - Use in memory filesystem to speed up I/O.
 - Use SQL transactions to reset database to avoid recreate a new database for each test.
 - Use `fingers_crossed` [Monolog handler](https://symfony.com/doc/5.4/logging.html#handlers-that-modify-log-entries) to reduce the amount of log.
+- Set `doctrine.dbal.logging: false` (in case of error, the stacktrace will contain the SQL query anyway)
+- Use [paratest](https://github.com/paratestphp/paratest) to parallelize tests
+- Disable code coverage if not necessary
+- Rollback the test database after each test instead of creating a new one
 
 ### Other links
 - https://symfony.com/doc/5.4/performance.html
