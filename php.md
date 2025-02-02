@@ -192,7 +192,7 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 
 ### Code
 - Use native PHP functions when possible
-- Use static methods when possible
+- Use static methods when possible (`array_*` functions, SPL library)
 - Use `===` instead of `==`
 - Delegate work to the database (filtering, sorting, etc.)
 - Avoid requests to external sources (database, filesystem, webservice) in `for` or `while` loops.
@@ -220,4 +220,5 @@ See https://www.php.net/manual/en/language.oop5.iterations.php
 - Use `unset()` to remove unused variable
 - Use `gc_collect_cycles()` to remove all unused variables
 - Minimize varialbles serialization
+  Avoid external dependencies when possible
 - to continue...
