@@ -1,5 +1,17 @@
 # Performance guidelines for Apache
 
+- [Enable HTTP2](#enable-http2)
+- [Remove .htaccess](#remove-htaccess)
+- [Use cache](#use-cache)
+- [Enable compression](#enable-compression)
+- [Disable unused modules](#disable-unused-modules)
+- [Avoid using mode_rewrite when possible](#avoid-using-mode_rewrite-when-possible)
+- [Use MPM prefork](#use-mpm-prefork)
+--[Optimize logs](#optimize-logs)
+- [Disable DNS lookup](#disable-dns-lookup)
+- [Other links](#other-links)
+- [Resources](#resources)
+
 ### Enable HTTP2
 Enable module `mod_http2`. The module `mod_php` is not compatible with HTTP2, please use PHP-FPM.  
 See https://httpd.apache.org/docs/2.4/en/howto/http2.html
@@ -38,14 +50,24 @@ See https://httpd.apache.org/modules
 Use `Redirect` or `Alias` directives instead of `RewriteRule` when possible.  
 See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 
-### Use prefork
+### Use MPM prefork
 ```
 # /etc/apache2/mods-enabled/mpm-worker.conf
 <IfModule mpm_prefork_module>
-  ServerLimit 128 # (Total RAM - Memory used by the system) / process size
-  StartServers 16 # Number of CPU cores
-  MaxRequestWorkers 128 # (Total RAM - Memory used by the system) / process size
-  MaxConnectionsPerChild 200
+  # Maximum number of processes (recommended: (Total RAM - Memory used by the system) / process size)
+  ServerLimit 256
+
+  # Maximum number of concurrent requests (recommended: (Total RAM - Memory used by the system) / process size)
+  MaxRequestWorkers 256
+
+  # Number of processes created at startup (recommended: 1 per CPU core)
+  StartServers 5
+
+  # Minimum number of idle processes
+  MinSpareServers 5
+
+  # Maximum number of idle processes
+  MaxSpareServers 100
 </IfModule>
 ```
 See https://httpd.apache.org/docs/2.4/en/mod/prefork.html  
