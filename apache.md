@@ -5,7 +5,7 @@
 - [Use cache](#use-cache)
 - [Enable compression](#enable-compression)
 - [Disable unused modules](#disable-unused-modules)
-- [Avoid using mode_rewrite when possible](#avoid-using-mode_rewrite-when-possible)
+- [Avoid using mod_rewrite when possible](#avoid-using-mod_rewrite-when-possible)
 - [Use MPM prefork](#use-mpm-prefork)
 --[Optimize logs](#optimize-logs)
 - [Disable DNS lookup](#disable-dns-lookup)
@@ -46,7 +46,7 @@ See https://httpd.apache.org/docs/current/en/mod/mod_deflate.html
 ### Disable unused modules
 See https://httpd.apache.org/modules
 
-### Avoid using mode_rewrite when possible
+### Avoid using mod_rewrite when possible
 Use `Redirect` or `Alias` directives instead of `RewriteRule` when possible.  
 See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 
