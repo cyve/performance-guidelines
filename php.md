@@ -11,6 +11,7 @@
 - [Parallelisation/asynchronicity](#parallelisation-asynchronicity)
 - [XDebug](#xdebug)
 - [Generators](#generators)
+- [Database persistent connection](#database-persistent-connection)
 - [Code](#code)
 
 ### PHP-FPM
@@ -189,6 +190,14 @@ foreach (generateNumbers(100) as $number) {
 }
 ```
 See https://www.php.net/manual/en/language.oop5.iterations.php
+
+### Database persistent connection
+```php
+$pdo = new PDO('mysql:host=localhost;dbname=app', $user, $pass, [PDO::ATTR_PERSISTENT => true]);
+```
+> Persistent connections are not closed at the end of the script, but are cached and re-used when another script requests a connection using the same credentials. The persistent connection cache allows you to avoid the overhead of establishing a new connection every time a script needs to talk to a database, resulting in a faster web application.
+
+See https://www.php.net/manual/en/pdo.connections.php
 
 ### Code
 - Use native PHP functions when possible
