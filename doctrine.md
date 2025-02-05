@@ -1,8 +1,10 @@
 # Doctrine performance guidelines
 
 - [Use the right fetch mode](#use-the-right-fetch-mode)
+- [Use the right relationship type](#use-the-right-relationship-type)
 - [Use the right hydratation mode](#use-the-right-hydratation-mode)
 - [Use partial objects](#use-partial-objects)
+- [Use custom hydrator](#use-custom-hydrator)
 - [Use batch processing](#use-batch-processing)
 - [Iterate on large results](#iterate-on-large-results)
 - [Disable logging and profiling](#disable-logging-and-profiling)
@@ -23,6 +25,9 @@ private Collection $items;
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#onetomany
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/tutorials/extra-lazy-associations.html
 
+### Use the right relationship type
+- Use `ManyToOne`relations instead of `OneToOne|` to take advandage of lazy loading
+- 
 ### Use the right hydratation mode
 ```php
 $query = $em->createQuery('SELECT u FROM App\Entity\User u');
@@ -47,6 +52,40 @@ $query = $em->getPartialReference(User::class, $id);
 ```
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/partial-objects.html
+
+### Use custom hydrator
+```yaml
+# config/packages/doctrine.yaml
+doctrine:
+    orm:
+        hydrators:
+            CustomHydrator: App\Doctrine\Hydrator\CustomHydrator
+```
+```php
+# or in PHP
+$entityManager
+    ->getConfiguration()
+    ->addCustomHydrationMode('CustomHydrator', CustomHydrator::class);
+```
+```php
+class CustomHydrator extends \Doctrine\ORM\Internal\Hydration\AbstractHydrator
+{
+    protected function hydrateAllData(): mixed
+    {
+        $results = [];
+        while ($row = $this->statement()->fetchAssociative()) {
+            // hydrate $results;
+        }
+        return $results;
+    }
+}
+```
+```php
+$objects = $repository
+    ->createQueryBuilder('o')
+    ->getQuery()
+    ->getResult('CustomHydrator');
+```
 
 ### Use batch processing
 ```php
