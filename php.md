@@ -12,6 +12,7 @@
 - [XDebug](#xdebug)
 - [Generators](#generators)
 - [Database persistent connection](#database-persistent-connection)
+- [Stateful PHP](#stateful-php)
 - [Code](#code)
 
 ### PHP-FPM
@@ -56,7 +57,7 @@ pm.process_idle_timeout=10s
 # The number of requests each child process should execute before respawning
 pm.max_requests=200
 
-# Log request that take more than 3s to
+# Log request that take more than 3s
 slowlog = /var/log/php-fpm.slow.log
 request_slowlog_timeout = 3s
 
@@ -199,6 +200,22 @@ $pdo = new PDO('mysql:host=localhost;dbname=app', $user, $pass, [PDO::ATTR_PERSI
 
 See https://www.php.net/manual/en/pdo.connections.php
 
+### Stateful PHP
+- Benefits: reuse state (ex: database connection), reduce bootstrap overhead
+- Drawbacks: state management, horizontal scaling, cache
+
+```php
+$server = new \OpenSwoole\HTTP\Server('127.0.0.1', 9501);
+$server->on('start', function (Server $server) {
+    echo "Connection open: {$req->fd}\n";
+});
+$server->on('request', function (Request $request, Response $response) {
+    $response->header('Content-Type', 'text/plain');
+    $response->end('Hello World');
+});
+$server->start();
+```
+
 ### Code
 - Use native PHP functions when possible
 - Use static methods when possible (`array_*` functions, SPL library)
@@ -212,7 +229,7 @@ See https://www.php.net/manual/en/pdo.connections.php
 - Use temporary files (with `tmpfile()`) to create large fils line by line
 - Avoid cloning object and use references
 - Stream HTTP response
-- Use `SplFixedArray` instead of array
+- Use `SplFixedArray` or `array_fill()` when the size is known to reserve memory
 - Use `SplMinHeap` instead of `sort()`
 - Avoid `file_get_contents()`, `file()` and any function reading a entire file in a variable
 - Use [lazy objects](https://github.com/symfony/var-exporter#lazyghosttrait)
@@ -225,9 +242,12 @@ See https://www.php.net/manual/en/pdo.connections.php
 - Use simple quotes instead of double
 - Use enums instead of constants
 - Use readonly properties to avoid useless multiple assignments
-- Use `array_chunk()` to split large array into smaller ones
+- Use `array_chunk()` and `unset()` to split large array and space memory
 - Use `unset()` to remove unused variable
 - Use `gc_collect_cycles()` to remove all unused variables
 - Minimize varialbles serialization
-  Avoid external dependencies when possible
+- Avoid external dependencies when possible
+- use `implode()` instead of string concatenation
+- use `strtr()` instead of `str_replace()` for multiple replacements
+- store regex patterns in variables to precompile them 
 - to continue...
