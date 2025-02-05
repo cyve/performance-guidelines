@@ -52,6 +52,7 @@ services:
 
 ### Routing
 - Use [route groups](https://symfony.com/doc/5.4/routing.html#route-groups-and-prefixes) with a prefix instead of repeating the path on all routes to speed up the router in development environment.
+- Set `framework.router.strict_requirements: null` in production
 
 ### Serialization
 - Make [custom normalizers cacheable](https://symfony.com/doc/5.4/serializer/custom_normalizer.html#performance).
