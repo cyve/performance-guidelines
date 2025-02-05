@@ -11,3 +11,7 @@
 - Use parameterized queries
 - Avoid using `DISTINCT` when not necessary
 - Use `LIMIT` for large result sets
+- Use `JOIN` to solve N+1 query issue
+
+### Rsources
+- https://releem.com/blog/mysql-performance-tuning
