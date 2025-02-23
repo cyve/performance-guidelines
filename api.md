@@ -1,9 +1,8 @@
 # API
 
-- Use payload compression
-- Use pagination
+- Use payload compression/minification
+- Use filters and pagination
 - Reduce response payload (selected fields, remove duplicates and empty values, use serialization groups)
-- Minify payload
 - Use cache
 - Optimize serialization
 - Avoid N+1 queries (use "eager" or "lazy" loading)
