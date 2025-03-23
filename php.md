@@ -249,5 +249,11 @@ $server->start();
 - Avoid external dependencies when possible
 - use `implode()` instead of string concatenation
 - use `strtr()` instead of `str_replace()` for multiple replacements
-- store regex patterns in variables to precompile them 
+- use `str_contains()', str_starts_with()` and `str_ends_with()` instead of `preg_match()` if possible
+- store regex patterns in variables to precompile them
+- use `ctype_*()` instead of `preg_match()` if possible
+- use `+` instead of `array_merge()`
+- use `[]` instead of `array_push()` to add element to array
+- use `array_multisort()` instead of `usort()` if possible
+- use `strtotime()` instead of `DateTime::createFromFormat()` when parsing common date formats
 - to continue...
