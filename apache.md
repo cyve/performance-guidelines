@@ -40,6 +40,10 @@ Enable module `mod_deflate`.
 </FilesMatch>
 # or
 AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css text/javascript application/javascript application/json
+# or
+SetOutputFilter BROTLI_COMPRESS
+DeflateCompressionLevel 5
+AddOutputFilterByType BROTLI_COMPRESS text/plain text/html text/css text/javascript application/json
 ```
 See https://httpd.apache.org/docs/current/en/mod/mod_deflate.html
 
