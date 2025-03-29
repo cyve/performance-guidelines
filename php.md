@@ -36,25 +36,37 @@ Configure PHP-FPM
 ```
 # /etc/php/8.3/fpm/pool.d/www.conf
 
-# The management mode. Set "static" for high traffic apps and "ondemand" for low traffic apps
-pm=static
-
-# The maximum number of child processes allowed to be spawned
-pm.max_children=128
-
-# The number of child processes to start when PHP-FPM starts (recommended: CPU cores x4)
+# Mode "dynamic" (default).
+# PHP-FPM will start `start_servers` processes at startup and will fork new processes on demand until `max_children` is reached.
+# Recommended values:
+# `start_servers: CPU cores x4
+# `min_spare_servers`: CPU cores x2
+# `max_spare_servers`: CPU cores x4
+# `max_children`: (total memory - system used by the system) / memory used by a process
+pm=dynamic
 pm.start_servers=4
-
-# The minimum number of idle child processes PHP-FPM will create (recommended: CPU cores x2)
 pm.min_spare_servers=2
-
-# The maximum number of idle child processes PHP-FPM will allow (recommended: CPU cores x4)
 pm.max_spare_servers=4
+pm.max_children=8
 
-# The idle time, in seconds, after which a child process will be killed
+# Mode "ondemand" (recommended for low traffic applications)
+# PHP-FPM will start `start_servers` processes at startup and will fork new processes when requests are received until `max_children` is reached.
+# Idle processes are killed after `process_idle_timeout` is reached.
+# Recommended values:
+# `start_servers`: CPU cores x4
+# `max_children`: (total memory - system used by the system) / memory used by a process
+pm=ondemand
+pm.start_servers=4
+pm.max_children=128
 pm.process_idle_timeout=10s
 
-# The number of requests each child process should execute before respawning
+# Mode "static" (recommended for high traffic applications)
+# PHP-FPM will start `max_children` processes at startup.
+# Recommended value for `max_children`: (total memory - system used by the system) / memory used by a process
+pm=static
+pm.max_children=128
+
+# The number of requests each child process should execute before respawning to avoid memory leaks
 pm.max_requests=200
 
 # Log request that take more than 3s
@@ -102,6 +114,13 @@ realpath_cache_size=4096K
 realpath_cache_ttl=600
 ```
 See https://www.php.net/manual/fr/ini.core.php#ini.realpath-cache-size
+
+### Session garbage collector
+```
+# php.ini
+# Set the probability to trigger the garbage collector to 0 for all requests
+session.gc_probability=0
+```
 
 ### Composer
 ```
