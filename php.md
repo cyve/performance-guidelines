@@ -4,6 +4,7 @@
 - [OPCache](#opcache)
 - [JIT compilation](#jit)
 - [Realpath cache](#realpath-cache)
+- [Session](#session)
 - [Composer](#composer)
 - [Logging](#logging)
 - [Applicative cache](#applicative-cache)
@@ -115,7 +116,7 @@ realpath_cache_ttl=600
 ```
 See https://www.php.net/manual/fr/ini.core.php#ini.realpath-cache-size
 
-### Session garbage collector
+### Session
 ```
 # php.ini
 # Set the probability to trigger the garbage collector to 0 for all requests
