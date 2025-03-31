@@ -4,7 +4,8 @@
 - [OPCache](#opcache)
 - [JIT compilation](#jit)
 - [Realpath cache](#realpath-cache)
-- [Session](#session)
+- [Sessions](#sessions)
+- [Multiple pools](#multiple-pools)
 - [Composer](#composer)
 - [Logging](#logging)
 - [Applicative cache](#applicative-cache)
@@ -94,8 +95,10 @@ opcache.max_accelerated_files=20000
 opcache.preload=/path/to/project/config/preload.php
 opcache.preload_user=www-data
 opcache.validate_timestamps=0
+opcache.file_update_protection=0
+opcache.save_comments=0 # /!\ will ignore annotations
 ```
-See https://www.php.net/manual/fr/opcache.configuration.php
+See https://www.php.net/manual/en/opcache.configuration.php
 
 ### JIT
 ```
@@ -114,13 +117,54 @@ See https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.jit
 realpath_cache_size=4096K
 realpath_cache_ttl=600
 ```
-See https://www.php.net/manual/fr/ini.core.php#ini.realpath-cache-size
+See https://www.php.net/manual/en/ini.core.php#ini.realpath-cache-size
 
-### Session
+### Sessions
 ```
 # php.ini
 # Set the probability to trigger the garbage collector to 0 for all requests
+# /!\ set a cronjob to run `session_gc()` periodically
 session.gc_probability=0
+
+session.save_handler=redis
+session.save_path=unix:///var/run/redis.sock?persistent=1
+# or
+session.save_path=tcp://redis:6379
+```
+See https://www.php.net/manual/en/session.configuration.php
+
+### Multiple pools
+```
+# /etc/php/8.3/fpm/pool.d/www.conf
+[www]
+listen = 127.0.0.1:9000
+pm=static
+php_admin_value[memory_limit]=128M
+```
+```
+# /etc/php/8.3/fpm/pool.d/admin.conf
+[admin]
+listen = 127.0.0.1:9001
+pm=ondemand
+php_admin_value[memory_limit]=512M
+```
+```
+# /etc/apache2/conf/httpd.conf
+<FilesMatch "\.php$">
+    SetHandler "proxy:unix:/var/run/php/php8.3-fpm.sock|fcgi://localhost:9000"
+</LocationMatch>
+<LocationMatch "^/admin">
+    SetHandler "proxy:unix:/var/run/php/php8.3-admin-fpm.sock|fcgi://localhost:9001"
+</LocationMatch>
+
+# or setup a load balancer between pools
+<FilesMatch "\.php$">
+    SetHandler "proxy:balancer://php-fpm-cluster/"
+</LocationMatch>
+<Proxy "balancer://php-fpm-cluster/">
+    BalancerMember "unix:/var/run/php/php8.3-fpm.sock|fcgi://localhost:9000"
+    BalancerMember "unix:/var/run/php/php8.3-www2-fpm.sock|fcgi://localhost:9001"
+</Proxy>
 ```
 
 ### Composer
