@@ -2,7 +2,7 @@
 
 - [PHP-FPM](#php-fpm)
 - [OPCache](#opcache)
-- [JIT compilation](#jit)
+- [JIT compilation](#jit-compilation)
 - [Realpath cache](#realpath-cache)
 - [Sessions](#sessions)
 - [Multiple pools](#multiple-pools)
@@ -10,7 +10,7 @@
 - [Logging](#logging)
 - [Applicative cache](#applicative-cache)
 - [Framework optimized for performance](#framework-optimized-for-performance)
-- [Parallelisation/asynchronicity](#parallelisation-asynchronicity)
+- [Parallelisation/asynchronicity](#parallelisationasynchronicity)
 - [XDebug](#xdebug)
 - [Generators](#generators)
 - [Database persistent connection](#database-persistent-connection)
@@ -100,7 +100,7 @@ opcache.save_comments=0 # /!\ will ignore annotations
 ```
 See https://www.php.net/manual/en/opcache.configuration.php
 
-### JIT
+### JIT compilation
 ```
 ; php.ini
 opcache.enable=1
@@ -204,7 +204,7 @@ See https://www.php.net/manual/en/book.apcu.php
 ### Parallelisation/asynchronicity
 - [Fibers](https://www.php.net/manual/en/language.fibers.php)
 - [parallel](https://www.php.net/manual/en/book.parallel.php)
-- [PCNTL extension](https://www.php.net/manual/en/intro.pcntl.php)
+- [PCNTL extension](https://www.php.net/manual/en/pcntl.example.php)
 - [OpenSwoole](https://github.com/openswoole/swoole-src)
 - [spatie/fork](https://github.com/spatie/fork)
 - [ReactPHP](https://reactphp.org)
