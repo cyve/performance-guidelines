@@ -15,6 +15,7 @@
 - [Generators](#generators)
 - [Database persistent connection](#database-persistent-connection)
 - [Stateful PHP](#stateful-php)
+- [Optimized functions](#optimized-functions)
 - [Code](#code)
 
 ### PHP-FPM
@@ -279,6 +280,22 @@ $server->on('request', function (Request $request, Response $response) {
 });
 $server->start();
 ```
+
+### Optimized functions
+Use the full qualified name of the following functions (ex: `\count()`):
+- `strlen()`
+- `count()`
+- `is_null()`, etc.
+- `intaval()`, etc.
+- `defined()`
+- `call_user_func()`
+- `in_array()`
+- `array_key_exists()`
+- `gettype()`
+- `get_class()`
+- `get_called_class()`
+- `func_num_args()`
+- `func_get_args()`
 
 ### Code
 - Use native PHP functions when possible
