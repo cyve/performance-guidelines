@@ -130,7 +130,7 @@ session.gc_probability=0
 session.save_handler=redis
 session.save_path=unix:///var/run/redis.sock?persistent=1
 # or
-session.save_path=tcp://redis:6379
+session.save_path=tcp://redis:6379?persistent=1
 ```
 See https://www.php.net/manual/en/session.configuration.php
 
