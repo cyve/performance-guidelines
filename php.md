@@ -91,6 +91,7 @@ See https://www.php.net/manual/en/install.fpm.configuration.php
 opcache.enable=1
 opcache.memory_consumption=256
 opcache.max_accelerated_files=20000
+opcache.interned_strings_buffer=32
 
 # prod only
 opcache.preload=/path/to/project/config/preload.php
@@ -99,6 +100,13 @@ opcache.validate_timestamps=0
 opcache.file_update_protection=0
 opcache.save_comments=0 # /!\ will ignore annotations
 ```
+**Optimising configuration**
+
+Look at the "Zend OPcache" section in the "phpinfo" page :
+- Increase `opcache.memory_consumption` if the "Free memory" metric is close to 0.
+- Increase `opcache.max_accelerated_files` if the "Cached keys" metric is close to the "Max keys" metric.
+- Increase `opcache.interned_strings_buffer` if the "Interned Strings Free memory" metric is close to 0.
+
 See https://www.php.net/manual/en/opcache.configuration.php
 
 ### JIT compilation
