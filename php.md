@@ -140,7 +140,9 @@ session.save_path=unix:///var/run/redis.sock?persistent=1
 # or
 session.save_path=tcp://redis:6379?persistent=1
 ```
-See https://www.php.net/manual/en/session.configuration.php
+See 
+- https://www.php.net/manual/en/session.configuration.php
+- https://www.getpagespeed.com/server-setup/php/cleanup-php-sessions-like-a-pro#how-debian-did-it
 
 ### Multiple pools
 ```
