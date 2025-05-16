@@ -6,8 +6,8 @@
 - [Enable compression](#enable-compression)
 - [Disable unused modules](#disable-unused-modules)
 - [Avoid using mod_rewrite when possible](#avoid-using-mod_rewrite-when-possible)
-- [Use MPM prefork](#use-mpm-prefork)
---[Optimize logs](#optimize-logs)
+- [Configure MPM](#configure-mpm)
+- [Optimize logs](#optimize-logs)
 - [Disable DNS lookup](#disable-dns-lookup)
 - [Other links](#other-links)
 - [Resources](#resources)
@@ -54,7 +54,14 @@ See https://httpd.apache.org/modules
 Use `Redirect` or `Alias` directives instead of `RewriteRule` when possible.  
 See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 
-### Use MPM prefork
+### Configure MPM
+
+#### mpm_prefork_module
+- Each HTTP request is handled by a separate child process with a single thread.
+- Pros: Each process is isolated, so a problem in one does not affect others.
+- Cons: High memory usage. Not as scalable for high traffic.
+- Use Case: stability and non-thread-safe applications.
+
 ```
 # /etc/apache2/mods-enabled/mpm-worker.conf
 <IfModule mpm_prefork_module>
@@ -74,8 +81,20 @@ See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
   MaxSpareServers 100
 </IfModule>
 ```
-See https://httpd.apache.org/docs/2.4/en/mod/prefork.html  
-See https://httpd.apache.org/docs/2.4/en/mod/mpm_common.html
+See https://httpd.apache.org/docs/2.4/en/mod/prefork.html
+
+#### mpm_worker_module
+- Multiple child processes, each with multiple threads handling one HTTP request.
+- Pros: More scalable than prefork, lower memory usage, better for handling many simultaneous connections.
+- Cons: A crash in one thread can affect others in the same process. Requires all code/modules to be thread-safe.
+- Use Case: high-traffic sites with thread-safe applications.
+
+See https://httpd.apache.org/docs/2.4/en/mod/worker.html
+
+#### mpm_event_module
+Similar to worker, but optimized for handling persistent connections.
+
+See https://httpd.apache.org/docs/2.4/en/mod/event.html
 
 ### Optimize logs
 Use directives `LogLevel`, `LogFormat` and `CustomLog` to log only useful events and informations.
