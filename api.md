@@ -9,3 +9,4 @@
 - Use async logging
 - Prehead connections (database connection pool, persistent connection)
 - Reduce number of proxies
+- Use JSON instead of XML if possible
