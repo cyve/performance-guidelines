@@ -347,4 +347,5 @@ Use the full qualified name of the following functions (ex: `\count()`):
 - use `[]` instead of `array_push()` to add element to array
 - use `array_multisort()` instead of `usort()` if possible
 - use `strtotime()` instead of `DateTime::createFromFormat()` when parsing common date formats
+- use `array_unique()` to remove duplcates
 - to continue...
