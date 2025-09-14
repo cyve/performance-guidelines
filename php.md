@@ -109,6 +109,13 @@ Look at the "Zend OPcache" section in the "phpinfo" page :
 
 See https://www.php.net/manual/en/opcache.configuration.php
 
+**Properly restart Opcache after deployment**
+```
+curl -sLO https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar
+chmod +x cachetool.phar
+php cachetool.phar opcache:reset --fcgi=/var/run/php/php8.4-fpm-profiler.sock
+```
+
 ### JIT compilation
 ```
 ; php.ini
