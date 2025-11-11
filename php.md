@@ -196,6 +196,7 @@ php_admin_value[memory_limit]=512M
 ```
 Use `composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader`  
 Use `composer dump-autoload --no-dev --optimize --classmap-authoritative --apcu`  
+In CI, add `$HOME/.composer/cache` to cache  
 See https://getcomposer.org/doc/articles/autoloader-optimization.md
 
 ### Logging
