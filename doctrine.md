@@ -10,6 +10,8 @@
 - [Disable logging and profiling](#disable-logging-and-profiling)
 - [Configure cache](#configure-cache)
 - [Use readonly entities](#use-readonly-entities)
+- [Disable query buffer while performing read-only queries](#disable-query-buffer-while-performing-read-only-queries)
+- [Fetch DTOs](#fetch-dtos)
 - [Other best practices](#other-best-practices)
 - [Links](#links)
 
@@ -112,8 +114,37 @@ foreach ($query->toIterable([], Query::HYDRATE_OBJECT) as $object) {
     $this->em->detach($object); // detach entity
 }
 ```
-
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/batch-processing.html#iterating-large-results-for-data-processing
+
+To avoid SQL buffered queries, mix iteration and batch queries :
+```php
+$id = 0;
+do {
+    $query = $repository->createQueryBuilder('e')
+        ->andWhere('e.id > :id')
+        ->setParameter('id', $id)
+        ->setMaxResults(10)
+        ->getQuery();
+    $results = $query->toIterable();
+    $hasResults = false;
+    foreach ($results as $result) {
+        $hasResults = true;
+        $id = $entity->getId();
+        yield $entity;
+    }
+} while ($hasResults);
+```
+
+Fetch only IDs and hydrate each entity just before you need it
+```php
+foreach ($repository->iterateIdsAsc() as $id) {
+    $entity = $repository->find($id);
+    // do stuff
+    if (++$i % 100 === 0) {
+        $em->clear(); // release memory
+    }
+}
+```
 
 ### Disable logging and profiling
 ```yaml
@@ -174,6 +205,20 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html#read-only-entities
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#entity
 
+### Disable query buffer while performing read-only queries
+`'driverOptions' => [PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false]`  
+Doctrine fetches one line at a time, then remove it from the memory.
+
+### Fetch DTOs
+```php
+class ProductView {
+    public function __construct(public string $name, public int $price) {}
+}
+
+/** @var iterable<ProductView> $results **/
+$results = $em->createQuery('SELECT NEW App\\ModelView\\ProductView(p.name, p.price) FROM App\\Entity\\Product p')->toIterable();
+```
+
 ### Other best practices
 - Avoid complex joins
 - Avoid inheritance mapping
@@ -185,6 +230,9 @@ $users = $em->createQuery('SELECT u FROM App\Entity\User u')
 - Do not map foreign keys to fields in an entity
 - Define transactions explicitally
 - Initialize collections in the constructor
+- Avoid using `findAll()` on big tables, use pagination/batch processing instead
+- Avoid calling `flush()` more than once
+- Disable SQL logger for background jobs
 
 ### Links
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html
