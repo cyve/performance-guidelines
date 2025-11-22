@@ -124,7 +124,10 @@ opcache.jit=tracing
 opcache.jit_buffer_size=100M
 opcache.jit=tracing
 ```
-The Just-In-Time compilcation optimizes the CPU load and may have low impact on application with lot of i/o.
+The Just-In-Time compilcation optimizes the CPU load and may have low impact on application with lot of i/o.  
+Use it if your application depends on machine learning, image processing, heavy math, FFI with C library.  
+No not use it if your application is a CRUD based on a database and/or third-party API requests.
+
 See https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.jit
 
 ### Realpath cache
