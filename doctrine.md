@@ -4,11 +4,13 @@
 - [Use the right relationship type](#use-the-right-relationship-type)
 - [Use the right hydratation mode](#use-the-right-hydratation-mode)
 - [Use partial objects](#use-partial-objects)
+- [Use references](#use-references)
 - [Use custom hydrator](#use-custom-hydrator)
 - [Use batch processing](#use-batch-processing)
 - [Iterate on large results](#iterate-on-large-results)
 - [Disable logging and profiling](#disable-logging-and-profiling)
 - [Configure cache](#configure-cache)
+- [Use cache on query](#use-cache-on-query)
 - [Use readonly entities](#use-readonly-entities)
 - [Disable query buffer while performing read-only queries](#disable-query-buffer-while-performing-read-only-queries)
 - [Fetch DTOs](#fetch-dtos)
@@ -54,6 +56,15 @@ $query = $em->getPartialReference(User::class, $id);
 ```
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/partial-objects.html
+
+### Use references
+```php
+// return reference to object. Did not request the database
+$foo = $em->getReference(Foo::class, $id);
+$entity->addFoo($foo);
+```
+
+- https://www.doctrine-project.org/projects/doctrine-orm/en/3.5/reference/advanced-configuration.html#reference-proxies
 
 ### Use custom hydrator
 ```yaml
@@ -185,6 +196,26 @@ when@prod:
 - https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
 - https://symfony.com/doc/current/reference/configuration/doctrine.html#caching-drivers
 - https://symfony.com/doc/current/cache.html
+
+### Use cache on query
+```php
+// Enable cache for query
+$query->enableResultCache();
+
+// Set cache TTL
+$query->setResultCacheLifetime(3600);
+
+// Set custom cache ID instead of random generated hash
+$query->setResultCacheId('my_custom_id');
+
+// Set both TTL and cache ID
+$query->enableResultCache(3600, 'my_custom_id');
+
+// Disable cache for this query
+$query->disableResultCache();
+```
+
+- https://www.doctrine-project.org/projects/doctrine-orm/en/3.5/reference/caching.html#result-cache
 
 ### Use readonly entities
 ```php
