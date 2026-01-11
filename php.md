@@ -107,13 +107,28 @@ Look at the "Zend OPcache" section in the "phpinfo" page :
 - Increase `opcache.max_accelerated_files` if the "Cached keys" metric is close to the "Max keys" metric.
 - Increase `opcache.interned_strings_buffer` if the "Interned Strings Free memory" metric is close to 0.
 
-See https://www.php.net/manual/en/opcache.configuration.php
+Look at the OPcache status using the `opcache_get_status(true)` method :
+- Increase `opcache.memory_consumption` if `cache_full` is true and/or `opcache_hit_rate` is below 99%.
+- Increase `opcache.max_accelerated_files` if `cache_full` is true and/or `num_cached_keys` equals `max_cached_keys`.
+
+- https://www.php.net/manual/en/opcache.configuration.php
+- https://www.php.net/manual/en/function.opcache-get-status.php
+
+**Warmup OPcache**
+```php
+$directory = new \RecursiveDirectoryIterator($this->getProjectDir().'/src');
+$files = new \RecursiveIteratorIterator($directory);
+foreach ($files as $file) {
+    if (!str_ends_with($file, '.php') || opcache_is_script_cached($file)) continue;
+    @opcache_compile_file($file);
+}
+```
 
 **Properly restart Opcache after deployment**
 ```
 curl -sLO https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar
 chmod +x cachetool.phar
-php cachetool.phar opcache:reset --fcgi=/var/run/php/php8.4-fpm-profiler.sock
+php cachetool.phar opcache:reset --fcgi=/run/php/php8.3-fpm.sock
 ```
 
 ### JIT compilation
