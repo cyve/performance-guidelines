@@ -4,6 +4,8 @@ Backend :
 - https://httpd.apache.org/docs/2.4/fr/programs/ab.html
 - https://www.blackfire.io
 - https://github.com/hubblo-org/scaphandre
+- https://github.com/phpbench/phpbench
+- https://github.com/sharkdp/hyperfine
 
 Web tools :
 - https://developers.google.com/web/tools/lighthouse
