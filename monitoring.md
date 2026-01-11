@@ -33,5 +33,12 @@ pm.status_path = /fpm-status
 - Get PHP-FPM status at http://localhost/fpm-status
 - Get PHP-FPM status with Prometheus format at http://localhost/fpm-status?openmetrics
 
+```php
+# fpm-status.php
+<?php echo json_encode(fpm_get_status());
+```
+
+- https://www.php.net/manual/fr/fpm.status.php
+
 ### MySQL
 (WIP)
