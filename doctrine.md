@@ -25,10 +25,10 @@ private Collection $items;
 ```
 `LAZY` : relation will be loaded as reference (default)  
 `EAGER` : relation will be fully loaded  
-`EXTRA_LAZY` : allows to perform operations on collections (ex: `$items->contains(...)`) without loading the full data
+`EXTRA_LAZY` : allows to perform operations on collections (ex: `$items->count()`, `$items->get($key)`, `$items->contains($object)`) without loading the full data
 
-- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/annotations-reference.html#onetomany
-- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/tutorials/extra-lazy-associations.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/reference/attributes-reference.html#onetomany
+- https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/tutorials/extra-lazy-associations.html
 
 ### Use the right relationship type
 - Use `ManyToOne`relations instead of `OneToOne|` to take advandage of lazy loading
