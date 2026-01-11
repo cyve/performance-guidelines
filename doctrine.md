@@ -14,6 +14,7 @@
 - [Use readonly entities](#use-readonly-entities)
 - [Disable query buffer while performing read-only queries](#disable-query-buffer-while-performing-read-only-queries)
 - [Fetch DTOs](#fetch-dtos)
+- [Use "DEFERRED_EXPLICIT" change tracking policy](#use-deferred_explicit-change-tracking-policy)
 - [Other best practices](#other-best-practices)
 - [Links](#links)
 
@@ -249,6 +250,19 @@ class ProductView {
 /** @var iterable<ProductView> $results **/
 $results = $em->createQuery('SELECT NEW App\\ModelView\\ProductView(p.name, p.price) FROM App\\Entity\\Product p')->toIterable();
 ```
+
+### Use "DEFERRED_EXPLICIT" change tracking policy
+Doctrine checks for changes only if the object goes through a persist or through a save cascade.
+```php
+#[Entity]
+#[ChangeTrackingPolicy('DEFERRED_EXPLICIT')]
+class User
+{
+    // ...
+}
+```
+- https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/change-tracking-policies.html#deferred-explicit
+  https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/attributes-reference.html#changetrackingpolicy
 
 ### Other best practices
 - Avoid complex joins
