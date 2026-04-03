@@ -11,10 +11,12 @@
 - [Disable logging and profiling](#disable-logging-and-profiling)
 - [Configure cache](#configure-cache)
 - [Use cache on query](#use-cache-on-query)
-- [Use readonly entities](#use-readonly-entities)
+- [Use read-only entities](#use-read-only-entities)
 - [Disable query buffer while performing read-only queries](#disable-query-buffer-while-performing-read-only-queries)
 - [Fetch DTOs](#fetch-dtos)
 - [Use "DEFERRED_EXPLICIT" change tracking policy](#use-deferred_explicit-change-tracking-policy)
+- [Use paginator](#use-paginator)
+- [Use indexes](#use-indexes)
 - [Other best practices](#other-best-practices)
 - [Links](#links)
 
@@ -51,6 +53,9 @@ $users = $query->getResult(Query::HYDRATE_ARRAY);
 ```php
 // return object with only `id` and `name` properties hydrated. The other properties are null.
 $query = $em->createQuery("SELECT PARTIAL u.{id,name} FROM App\Entity\User u");
+
+// same with query builder
+$query = $em->createQueryBuilder('e')->select('PARTIAL u.{id,name}')->getQuery();
 
 // return object with only identifier hydrated. The other properties are null.
 $query = $em->getPartialReference(User::class, $id);
@@ -218,7 +223,7 @@ $query->disableResultCache();
 
 - https://www.doctrine-project.org/projects/doctrine-orm/en/3.5/reference/caching.html#result-cache
 
-### Use readonly entities
+### Use read-only entities
 ```php
 /* @Entity(readOnly=true) */
 class User {}
@@ -263,6 +268,31 @@ class User
 ```
 - https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/change-tracking-policies.html#deferred-explicit
   https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/attributes-reference.html#changetrackingpolicy
+
+### Use paginator
+```php
+$query = $this->createQueryBuilder('e')
+    ->setFirstResult(($page - 1) * $limit)
+    ->setMaxResults($limit)
+    ->getQuery();
+$paginator = new Paginator($query);
+$items = iterator_to_array($paginator);
+$totalCount = count($paginator);
+```
+
+### Use indexes
+```
+#[ORM\Entity]
+#[ORM\Index(name: 'idx_sku', columns: ['sku'])]
+#[ORM\Index(name: 'idx_category', columns: ['category_id'])]
+class Product
+{
+    #[ORM\Column]
+    private string $sku;
+    #[ORM\ManyToOne]
+    private Category $category;
+}
+```
 
 ### Other best practices
 - Avoid complex joins
