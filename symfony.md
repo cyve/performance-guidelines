@@ -78,6 +78,7 @@ See [Doctrine performance guidelines](doctrine.md)
 - Use [Symfony UX](https://ux.symfony.com/) JavaScript components to speed up page loading.
 - Cache static page content
 - Use `cache` tag (https://twig.symfony.com/doc/3.x/tags/cache.html)
+- Disable debug and strict variables in production (`when@prod.twig.debug: false` and `when@prod.twig.strict_variable: false`)
 
 ### Kernel
 - Avoid sub-requests if not necessary.
