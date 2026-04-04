@@ -160,10 +160,18 @@ See https://www.php.net/manual/en/ini.core.php#ini.realpath-cache-size
 # /!\ set a cronjob to run `session_gc()` periodically
 session.gc_probability=0
 
+# Set the session TTL
+session.gc_maxlifetime = 3600
+
+# Store sessions in Redis
 session.save_handler=redis
 session.save_path=unix:///var/run/redis.sock?persistent=1
 # or
 session.save_path=tcp://redis:6379?persistent=1
+
+# Store sessions in Memcached
+session.save_handler=memcached
+session.save_path=memcached:11211
 ```
 See 
 - https://www.php.net/manual/en/session.configuration.php
