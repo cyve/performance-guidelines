@@ -13,7 +13,13 @@
 - [Resources](#resources)
 
 ### Enable HTTP2
-Enable module `mod_http2`. The module `mod_php` is not compatible with HTTP2, please use PHP-FPM.  
+Enable module `mod_http2`. The module `mod_php` is not compatible with HTTP2, please use PHP-FPM.
+```
+# httpd.conf
+LoadModule http2_module modules/mod_http2.so
+Protocols h2 http/1.1
+# Protocols h2c http/1.1 en dev pour désactiver le chiffrement TLS
+```
 See https://httpd.apache.org/docs/2.4/en/howto/http2.html
 
 ### Remove .htaccess
