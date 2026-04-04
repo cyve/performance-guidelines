@@ -205,6 +205,13 @@ when@prod:
 - https://symfony.com/doc/current/cache.html
 
 ### Use `#Cache` attribute on entity
+```yaml
+# config/packages/doctrine.yaml
+doctrine:
+    orm:
+        second_level_cache:
+            enabled: true
+```
 ```php
 #[ORM\Entity]
 #[Cache(usage: "READ_ONLY")]
