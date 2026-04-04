@@ -10,6 +10,7 @@
 - [Iterate on large results](#iterate-on-large-results)
 - [Disable logging and profiling](#disable-logging-and-profiling)
 - [Configure cache](#configure-cache)
+- [Use `#Cache` attribute on entity](use-cache-attribute-on-entity)
 - [Use cache on query](#use-cache-on-query)
 - [Use read-only entities](#use-read-only-entities)
 - [Disable query buffer while performing read-only queries](#disable-query-buffer-while-performing-read-only-queries)
@@ -203,6 +204,26 @@ when@prod:
 - https://symfony.com/doc/current/reference/configuration/doctrine.html#caching-drivers
 - https://symfony.com/doc/current/cache.html
 
+### Use `#Cache` attribute on entity
+```php
+#[ORM\Entity]
+#[Cache(usage: "READ_ONLY")]
+class Product
+{
+    // READ_ONLY mode : no updates
+    #[ORM\OneToMany, Cache(usage: "READ_ONLY")]
+    private Collection $reviews;
+
+    // NONSTRICT_READ_WRITE mode : avoid obsolete data
+    #[ORM\ManyToMany, [Cache(usage: "NONSTRICT_READ_WRITE")]
+    private Collection $relatedProducts;
+
+    // READ_WRITE mode : always up-to-date
+    #[ORM\OneToOne, Cache(usage: "READ_WRITE")]
+    private ?Stock $stock = null;
+}
+```
+
 ### Use cache on query
 ```php
 // Enable cache for query
@@ -310,6 +331,6 @@ class Product
 - Disable SQL logger for background jobs
 
 ### Links
-- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/improving-performance.html
-- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/second-level-cache.html
-- https://www.doctrine-project.org/projects/doctrine-orm/en/2.11/reference/best-practices.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/improving-performance.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/second-level-cache.html
+- https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/best-practices.html
