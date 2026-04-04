@@ -130,6 +130,11 @@ curl -sLO https://github.com/gordalina/cachetool/releases/latest/download/cachet
 chmod +x cachetool.phar
 php cachetool.phar opcache:reset --fcgi=/run/php/php8.3-fpm.sock
 ```
+or
+```php
+<?php
+opcache_reset();
+```
 
 ### JIT compilation
 ```
