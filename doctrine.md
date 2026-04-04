@@ -315,6 +315,16 @@ class Product
 }
 ```
 
+**Partial indexes**
+```php
+#ORM\Index(columns: ['status', 'created_at'], where: "status = 'active'")
+```
+
+**Composite indexes**
+```php
+#ORM\Index(name: 'author_status_idx', columns: ['author_id', 'status'])
+```
+
 ### Other best practices
 - Avoid complex joins
 - Avoid inheritance mapping
