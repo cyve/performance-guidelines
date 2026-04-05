@@ -23,7 +23,8 @@ Protocols h2 http/1.1
 See https://httpd.apache.org/docs/2.4/en/howto/http2.html
 
 ### Remove .htaccess
-Use `<Directory>` section in the Apache configuration to set specific directives.
+- Use `<Directory>` section in the Apache configuration to set specific directives.
+- Use `AllowOverride None` to disable configuration override in `.htaccess` files.
 See https://httpd.apache.org/docs/2.4/howto/htaccess.html#when
 
 ### Use cache
