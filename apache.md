@@ -9,6 +9,7 @@
 - [Configure MPM](#configure-mpm)
 - [Optimize logs](#optimize-logs)
 - [Disable DNS lookup](#disable-dns-lookup)
+- [Use Unix sockets instead of TCP](#use-unix-sockets-instead-of-tcp)
 - [Other links](#other-links)
 - [Resources](#resources)
 
@@ -126,6 +127,17 @@ See https://httpd.apache.org/docs/2.4/en/logs.html
 
 ### Disable DNS lookup
 Add directive `HostnameLookups Off` to Apache configuration
+
+### Use Unix sockets instead of TCP
+```
+# /etc/apache2/conf/httpd.conf
+<IfModule proxy_fcgi_module>
+    <FilesMatch \.php$>
+        # SetHandler "proxy:fcgi://localhost:9000"
+        SetHandler "proxy:unix:/run/php/php8.4-fpm.sock"
+    </FilesMatch>
+</IfModule>
+```
 
 ### Other links
 - https://httpd.apache.org/docs/2.4/en/misc/perf-tuning.html
