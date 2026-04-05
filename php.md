@@ -111,6 +111,7 @@ Look at the OPcache status using the `opcache_get_status(true)` method :
 - Increase `opcache.memory_consumption` if `cache_full` is true and/or `opcache_hit_rate` is below 99%.
 - Increase `opcache.max_accelerated_files` if `cache_full` is true and/or `num_cached_keys` equals `max_cached_keys`.
 
+See :
 - https://www.php.net/manual/en/opcache.configuration.php
 - https://www.php.net/manual/en/function.opcache-get-status.php
 
@@ -254,12 +255,14 @@ See https://www.php.net/manual/en/book.apcu.php
 ### Parallelisation/asynchronicity
 - [Fibers](https://www.php.net/manual/en/language.fibers.php)
 - [parallel](https://www.php.net/manual/en/book.parallel.php)
+- [Semaphore](https://www.php.net/manual/en/book.sem.php) (send messages between PHP processes)
+- [Shared memory](https://www.php.net/manual/en/book.shmop.php) (share memory between PHP processes)
 - [PCNTL extension](https://www.php.net/manual/en/pcntl.example.php)
 - [OpenSwoole](https://github.com/openswoole/swoole-src)
 - [spatie/fork](https://github.com/spatie/fork)
 - [ReactPHP](https://reactphp.org)
 - [AMPHP](https://amphp.org)
-
+- 
 ### Xdebug
 Disable Xdebug in production (of course) but also in development environment or CI when you don't need it (ex: composer install, etc.) If you can't disable the PHP extension, you can run PHP without Xdebug by setting the Xdebug mode (`XDEBUG_MODE=off php app.php`, or `php -d xdebug.mode=off app.php`)
 
