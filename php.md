@@ -16,6 +16,7 @@
 - [Database persistent connection](#database-persistent-connection)
 - [Stateful PHP](#stateful-php)
 - [Optimized functions](#optimized-functions)
+- [Large files](#large-files)
 - [Code](#code)
 
 ### PHP-FPM
@@ -262,7 +263,7 @@ See https://www.php.net/manual/en/book.apcu.php
 - [spatie/fork](https://github.com/spatie/fork)
 - [ReactPHP](https://reactphp.org)
 - [AMPHP](https://amphp.org)
-- 
+
 ### Xdebug
 Disable Xdebug in production (of course) but also in development environment or CI when you don't need it (ex: composer install, etc.) If you can't disable the PHP extension, you can run PHP without Xdebug by setting the Xdebug mode (`XDEBUG_MODE=off php app.php`, or `php -d xdebug.mode=off app.php`)
 
@@ -349,6 +350,34 @@ Use the full qualified name of the following functions (ex: `\count()`):
 - `func_num_args()`
 - `func_get_args()`
 
+### Large files
+**Zip file with filter**
+```php
+// zip
+$f1 = fopen('php://filter/zip.deflate/resource=origin.txt', 'r');
+$f2 = fopen('target.zip', 'w');
+stream_copy_stream($f1, $f2);
+
+// unzip
+file_get_content('php://filter/zip.inflate/resource=target.zip');
+```
+
+**Custom protocol**
+```php
+class CustomProtocol {}
+stream_wrapper_register('custom', CustomProtocol::class);
+$content = file_get_content('custom://origin.txt');
+```
+See https://www.php.net/manual/en/class.streamwrapper.php
+
+**Custom filter**
+```php
+class CustomFilter extends php_user_filter {}
+stream_filter_register('custom', CustomFilter::class);
+stream_filter_append($stream, 'custom', STREAM_FILTER_READ);
+```
+See https://www.php.net/manual/en/class.php-user-filter.php
+
 ### Code
 - Use native PHP functions when possible
 - Use static methods when possible (`array_*` functions, SPL library)
@@ -392,4 +421,6 @@ Use the full qualified name of the following functions (ex: `\count()`):
 - use `array_unique()` to remove duplcates
 - Avoid magic methods
 - Avoid `eval()`
+- Use [WeakReference](https://www.php.net/manual/en/class.weakreference.php) to create reference to an object which does not prevent the object from being destroyed
+- Use lazy evaluation in `if` statements (`if (do_something_fast_or_easy() || do_something_slow_or_hard()) {}`)
 - to continue...
