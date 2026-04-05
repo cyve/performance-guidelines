@@ -32,6 +32,11 @@ log_queries_not_using_indexes=1
 ```
 See https://dev.mysql.com/doc/refman/8.4/en/slow-query-log.html
 
+### Indexes
+- Unique values: `CREATE UNIQUE INDEX sku_idx ON product (sku);`
+- Regular index: `CREATE INDEX sku_idx ON product (sku);` (for search by SKU)
+- Descending index: `CREATE INDEX sku_idx ON product (sku DESC);` (speed up search in descending order)
+
 ### Misc
 - Log optimization
 - Indexes
