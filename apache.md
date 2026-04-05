@@ -28,7 +28,7 @@ See https://httpd.apache.org/docs/2.4/en/howto/http2.html
 See https://httpd.apache.org/docs/2.4/howto/htaccess.html#when
 
 ### Use cache
-Enalbe module `mod_headers`. Add `ETag` and `Cache-Control` headers on static responses.
+Enable module `mod_headers`. Add `ETag` and `Cache-Control` headers on static responses.
 ```
 <FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2|pdf|txt)$">
   # generate etag from file size and last modification time
@@ -38,6 +38,16 @@ Enalbe module `mod_headers`. Add `ETag` and `Cache-Control` headers on static re
 </FilesMatch>
 ```
 See https://httpd.apache.org/docs/2.4/en/caching.html
+
+Enable module `mod_expires`. Add `Expires` headers on static responses.
+```
+<FilesMatch ".(html|xml|csv|css|js|ico|jpe?g|png|gif|svg|eot|ttf|otf|woff|woff2|pdf|txt)$">
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/html "access plus 1 day"
+</FilesMatch>
+```
+See https://httpd.apache.org/docs/2.4/en/mod/mod_expires.html
 
 ### Enable compression
 Enable module `mod_deflate`.
