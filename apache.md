@@ -63,6 +63,7 @@ See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 ### Configure MPM
 
 #### mpm_prefork_module
+- Apache pre-start processes until `MaxRequestWorkers` is reached.
 - Each HTTP request is handled by a separate child process with a single thread.
 - Pros: Each process is isolated, so a problem in one does not affect others.
 - Cons: High memory usage. Not as scalable for high traffic.
@@ -90,6 +91,7 @@ See https://httpd.apache.org/docs/trunk/en/rewrite/avoid.html
 See https://httpd.apache.org/docs/2.4/en/mod/prefork.html
 
 #### mpm_worker_module
+- The main process launches child processes until `ThreadsPerChild` is reached.
 - Multiple child processes, each with multiple threads handling one HTTP request.
 - Pros: More scalable than prefork, lower memory usage, better for handling many simultaneous connections.
 - Cons: A crash in one thread can affect others in the same process. Requires all code/modules to be thread-safe.
@@ -98,7 +100,7 @@ See https://httpd.apache.org/docs/2.4/en/mod/prefork.html
 See https://httpd.apache.org/docs/2.4/en/mod/worker.html
 
 #### mpm_event_module
-Similar to worker, but optimized for handling persistent connections.
+- Similar to worker, but keep TCP conenctions alive
 
 See https://httpd.apache.org/docs/2.4/en/mod/event.html
 
