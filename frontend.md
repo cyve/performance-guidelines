@@ -33,6 +33,7 @@ JavaScript/CSS :
 - Use grid layout instead of flexbox to avoid layout shift problems
 - (beta) Use Compression Dictionnary Transport (https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Compression_dictionary_transport)
 - (beta) Use speculation rules (https://developer.mozilla.org/fr/docs/Web/API/Speculation_Rules_API)
+- Use script lazy-loading (append `script` element to body on `load` event)
 
 Features :
 - Remove non-essential features
