@@ -20,6 +20,25 @@ See https://dev.mysql.com/doc/refman/8.4/en/innodb-buffer-pool-resize.html
 - `innodb_flush_log_at_trx_commit=1` write to buffer and flush to disk after each transaction (safest)
 - `innodb_flush_log_at_trx_commit=2` write to buffer after each transaction and flush to disk every second (balance)
 
+**max_connections**
+- Number of concurrent connections allowed to the database (default: 151)
+
+### Cache
+```
+# my.ini
+# enable cache (or disable it in case of high write/read rate)
+query_cache_type = 1
+# size of the cache
+query_cache_size = 32M
+# max size for a single cached query
+query_cache_limit = 2M
+```
+
+**Monitor cache hits**
+- `SHOW STATUS LIKE 'Qcache%';`  
+- Cache hit ratio = hits / (hits + inserts) x 100 (should be over 80%)
+- Cache Memory Usage should be below 70% of limit
+
 ### Slow queries monitoring
 ```
 # my.ini
@@ -36,20 +55,23 @@ See https://dev.mysql.com/doc/refman/8.4/en/slow-query-log.html
 - Unique values: `CREATE UNIQUE INDEX sku_idx ON product (sku);`
 - Regular index: `CREATE INDEX sku_idx ON product (sku);` (for search by SKU)
 - Descending index: `CREATE INDEX sku_idx ON product (sku DESC);` (speed up search in descending order)
+- Use indexes on columns used in WHERE, JOIN, and ORDER BY
 
-### Misc
-- Log optimization
-- Indexes
+### Optimize SQL queries
 - Avoid SELECT *
-- Avoid sub-queries (`SELECT id, (SELECT name FROM b WHERE b.id=a.id) AS FROM a`)
-- Lazy connection
-- Table defragmentation
-- Avoid using wildcard (`%`) in `LIKE` clause on indexes
-- Use parameterized queries
-- Avoid using `DISTINCT` when not necessary
 - Use `LIMIT` for large result sets
 - Use `JOIN` to solve N+1 query issue
+- Use parameterized queries
+- Avoid using wildcard (`%`) in `LIKE` clause on indexes
+- Avoid using `DISTINCT` when not necessary
+- Avoid sub-queries (`SELECT id, (SELECT name FROM b WHERE b.id=a.id) AS FROM a`)
 
-### Rsources
+### Misc
+- Lazy connection
+- Table defragmentation
+- Reuse catabase connections
+
+### Resources
 - https://releem.com/blog/mysql-performance-tuning
 - https://releem.com/blog/innodb-performance-tuning
+- https://releem.com/docs/mysql-performance-parameters
