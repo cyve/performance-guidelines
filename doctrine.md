@@ -34,8 +34,8 @@ private Collection $items;
 - https://www.doctrine-project.org/projects/doctrine-orm/en/3.6/tutorials/extra-lazy-associations.html
 
 ### Use the right relationship type
-- Use `ManyToOne`relations instead of `OneToOne|` to take advandage of lazy loading
-- 
+- Use `ManyToOne`relations instead of `OneToOne` to take advandage of lazy loading
+
 ### Use the right hydratation mode
 ```php
 $query = $em->createQuery('SELECT u FROM App\Entity\User u');
@@ -281,7 +281,13 @@ class ProductView {
 }
 
 /** @var iterable<ProductView> $results **/
-$results = $em->createQuery('SELECT NEW App\\ModelView\\ProductView(p.name, p.price) FROM App\\Entity\\Product p')->toIterable();
+$results = $this->getEntityManager()->createQueryBuilder()
+        ->select('NEW App\ModelView\ProductView(p.name, p.price)')
+        ->from('App\Entity\Product', 'p')
+        ->getQuery()
+        ->toIterable();
+// OR
+$results = $em->createQuery('SELECT NEW App\ModelView\ProductView(p.name, p.price) FROM App\Entity\Product p')->toIterable();
 ```
 
 ### Use "DEFERRED_EXPLICIT" change tracking policy
