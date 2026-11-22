@@ -30,3 +30,22 @@ See https://developer.mozilla.org/en-US/docs/Glossary/HS
 
 ### Other links
 - https://developer.mozilla.org/en-US/docs/Web/Security/Types_of_attacks
+
+### php.ini
+```ini
+; Leave function arguments out of stack traces, they can hold sensitive information
+; Default: Off
+zend.exception_ignore_args=On
+
+; Don't copy process ENVVARS into $_ENV on worker start (you should use getenv() instead).
+; Default: "EGPCS" (Env, Get, Post, Cookie, Server)
+variables_order="GPCS"
+
+; Add into $_REQUEST GET, then POST parameters. Exclude COOKIES, they can be set by other means.
+; Default: same as variables_order
+request_order="GP"
+
+; Disable loading extensions at runtime with dl()
+; Default: On
+enable_dl=Off
+```
