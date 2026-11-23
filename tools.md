@@ -6,6 +6,7 @@ Backend :
 - https://github.com/hubblo-org/scaphandre
 - https://github.com/phpbench/phpbench
 - https://github.com/sharkdp/hyperfine
+- https://xdebug.org/docs/profiler
 
 Web tools :
 - https://developers.google.com/web/tools/lighthouse
